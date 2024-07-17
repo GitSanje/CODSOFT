@@ -35,28 +35,46 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={` lg:p-5 top-0 fixed w-full transition duration-300 bg-gray-400 text-white ${
+        className={` md:p-5 top-0 fixed w-full transition duration-300 bg-white ${
           scrolled
-            ? "md:bg-gray-400 md:text-white"
-            : "md:bg-transparent md:text-black"
+            ? "md:bg-white-400 md:text-gray-600"
+            : "md:bg-transparent "
         }`}
       >
-        <div className="md:hidden px-7 p-5 ">
+        <div className="md:hidden px-7 p-5 text-gray-500">
           <button onClick={toggleMenu} className="focus:outline-none">
+           {menuOpen ?  
+           <svg
+           className="w-6 h-6"
+           fill="none"
+           stroke="currentColor"
+           viewBox="0 0 24 24"
+           xmlns="http://www.w3.org/2000/svg"
+         >
+           <path
+             strokeLinecap="round"
+             strokeLinejoin="round"
+             strokeWidth="2"
+             d="M6 18L18 6M6 6l12 12"
+           ></path>
+         </svg>
+            :
             <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              ></path>
-            </svg>
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg> 
+            }
+        
           </button>
         </div>
 
@@ -67,8 +85,8 @@ const Navbar = () => {
 
         >
           {Links.map((link) => (
-            <li key={link.name} className="md:ml-8 md:my-0   my-7">
-              <a href={link.link} className="hover:text-green-300">{link.name}</a>
+            <li key={link.name} className={`text-lg  md:ml-8 md:my-0 my-7  ${scrolled ?'md:text-gray-600' : 'md:text-white'} `}>
+              <a href={link.link} className="hover:text-lime-500 ">{link.name}</a>
             </li>
           ))}
         </ul>
