@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../Layout/Navbar";
 import bgImage from "../assets/img/img-colored.jpg";
+import Portfolio from "./Portfolio";
 
 const Home = () => {
   return (
@@ -27,6 +28,8 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <Portfolio/>
+
     </>
   );
 };
