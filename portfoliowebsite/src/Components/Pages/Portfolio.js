@@ -1,6 +1,7 @@
 import React from "react";
 import DisplayBox from "../partials/DisplayBox";
 import p1img from "../assets/img/p1.jpg";
+import Heading from "../partials/Heading";
 
 const Portfolio = () => {
   let Categories = [
@@ -23,11 +24,8 @@ const Portfolio = () => {
   return (
     <>
       <div className=" mx-auto" style={{ background: "#222222" }}>
-        <div className="  text-white flex items-center justify-center pt-28 ">
-          <span className="text-3xl font-light "> Featured</span>
-          <h4 className="text-3xl font-bold ml-4">Portfolio</h4>
-        </div>
-
+        
+          <Heading first="Featured" last="Portfolio"/>
         <div className="container mx-auto py-12">
           <ul className="flex flex-wrap justify-center    ">
             {Categories.map((category) => (
