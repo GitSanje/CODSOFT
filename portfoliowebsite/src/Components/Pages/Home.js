@@ -3,6 +3,7 @@ import Navbar from "../Layout/Navbar";
 import bgImage from "../assets/img/img-colored.jpg";
 import Portfolio from "./Portfolio";
 import Resume from "./Resume";
+import About from "./About";
 
 const Home = () => {
   return (
@@ -31,6 +32,7 @@ const Home = () => {
       </div>
       <Portfolio/>
       <Resume/>
+      <About/>
 
     </>
   );

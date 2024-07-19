@@ -35,14 +35,14 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={` md:p-5 top-0 fixed w-full transition duration-300 bg-white ${
+        className={` md:p-5 top-0 fixed w-full transition duration-300 bg-white  ${
           scrolled
-            ? "md:bg-white-400 md:text-gray-600"
+            ? "md:bg-white md:text-gray-600"
             : "md:bg-transparent "
-        }`}
+        }  `}
       >
-        <div className="md:hidden px-7 p-5 text-gray-500">
-          <button onClick={toggleMenu} className="focus:outline-none">
+        <div className="md:hidden px-7  p-4 text-gray-500">
+          <button onClick={toggleMenu} className="focus:outline-none ">
            {menuOpen ?  
            <svg
            className="w-6 h-6"
