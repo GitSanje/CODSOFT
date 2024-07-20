@@ -2,6 +2,7 @@ import React from "react";
 import Myimg from "../assets/img/portfolio-img.png";
 import Heading from "../partials/Heading";
 import Button from "../partials/Button";
+import ClientTestimonial from "./ClientTestimonial";
 
 // .section-heading {
 //     margin-bottom: 30px;
@@ -52,6 +53,8 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      <ClientTestimonial/>
     </>
   );
 };

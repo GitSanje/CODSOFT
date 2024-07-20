@@ -23,7 +23,7 @@ const Portfolio = () => {
 
   return (
     <>
-      <div className=" mx-auto" style={{ background: "#222222" }}>
+      <div className=" mx-auto pt-16" style={{ background: "#222222" }}>
         
           <Heading first="Featured" last="Portfolio"/>
         <div className="container mx-auto py-12">

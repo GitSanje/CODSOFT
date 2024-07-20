@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <>
       <div
-        className=" relative bg-image-container  z-[-1] "
+        className=" relative bg-image-container  z-10 "
         style={{ backgroundColor: "#9A9A9A" , }}
         
       >

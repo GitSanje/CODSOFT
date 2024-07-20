@@ -1,0 +1,21 @@
+.spike {
+    position: relative;
+   
+
+  }
+  
+.spike:before {
+    content: "";
+    position: absolute;
+    top: 20px; 
+    left: -20px; 
+    height: 20px;
+    width: 20px;
+    /* border-bottom-left-radius: 50%; */
+    background-color: none; 
+    /* box-shadow: 0 20px 0 0 #333333;  */
+    border-right: 15px solid #333333; 
+    border-bottom: 20px solid transparent;  
+ 
+  }
+  
