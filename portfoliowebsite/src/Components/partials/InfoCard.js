@@ -15,7 +15,7 @@ const InfoCard = ({
       style={{ background: "#333333" }}
     >
       <div className="date flex items-center text-white text-sm font-medium">
-        <i className="fa-regular fa-calendar"></i>
+        <i className="fa-regular fa-calendar " ></i>
         <p className="ml-2">{`${startDate} - ${endDate}`}</p>
       </div>
 

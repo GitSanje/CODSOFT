@@ -9,7 +9,7 @@ const CommentCard = ({ img, comment, By }) => {
         {/* Image */}
       
           <img
-            src={clinet_pic}
+            src={img|| clinet_pic}
             alt=""
             className="rounded-full "
             style={{ width: "50px", height: "50px" }}

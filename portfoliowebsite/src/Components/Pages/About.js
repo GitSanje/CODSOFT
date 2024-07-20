@@ -3,6 +3,7 @@ import Myimg from "../assets/img/portfolio-img.png";
 import Heading from "../partials/Heading";
 import Button from "../partials/Button";
 import ClientTestimonial from "./ClientTestimonial";
+import MyServices from "./MyServices";
 
 // .section-heading {
 //     margin-bottom: 30px;
@@ -55,6 +56,8 @@ const About = () => {
       </div>
 
       <ClientTestimonial/>
+      <MyServices/>
+      
     </>
   );
 };
