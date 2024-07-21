@@ -3,14 +3,15 @@ import blog_img from "../assets/img/post_2.jpg.webp";
 
 const BlogCard = ({img, title, dis, date, comment}) => {
   return (
-    <div className=" rounded-md" style={{ background: "#333333" }}>
+    <div className=" rounded-md transform transition duration-300 hover:-translate-y-2 " style={{ background: "#333333" }}>
       <div className="flex flex-col items-center justify-center space-y-7">
         <div className="w-full h-64 overflow-hidden rounded-md">
-          <img
+          <a href="#">
+            <img
             src={img || blog_img}
             alt=""
             className="w-full h-full object-cover"
-          />
+          /></a>
         </div>
 
         <a href="#"
@@ -24,7 +25,7 @@ const BlogCard = ({img, title, dis, date, comment}) => {
         </p>
       </div>
 
-      <div className="p-7 text-white flex flex-col">
+      <div className="p-7 text-gray-500 flex flex-col lg:flex-row lg:space-x-2">
         
           <a href="#" className="hover:text-lime-600">
             <i className="fa-regular fa-calendar mr-2"></i>
