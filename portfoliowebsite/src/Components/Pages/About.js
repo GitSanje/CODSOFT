@@ -4,6 +4,7 @@ import Heading from "../partials/Heading";
 import Button from "../partials/Button";
 import ClientTestimonial from "./ClientTestimonial";
 import MyServices from "./MyServices";
+import Blog from "./Blog";
 
 // .section-heading {
 //     margin-bottom: 30px;
@@ -57,6 +58,7 @@ const About = () => {
 
       <ClientTestimonial/>
       <MyServices/>
+      <Blog/>
       
     </>
   );
