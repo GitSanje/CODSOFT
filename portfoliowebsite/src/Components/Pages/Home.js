@@ -4,6 +4,7 @@ import bgImage from "../assets/img/img-colored.jpg";
 import Portfolio from "./Portfolio";
 import Resume from "./Resume";
 import About from "./About";
+import Contact from "./Contact";
 
 const Home = () => {
   return (
@@ -33,6 +34,7 @@ const Home = () => {
       <Portfolio/>
       <Resume/>
       <About/>
+      <Contact/>
 
     </>
   );

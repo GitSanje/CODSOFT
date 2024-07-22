@@ -6,11 +6,7 @@ import ClientTestimonial from "./ClientTestimonial";
 import MyServices from "./MyServices";
 import Blog from "./Blog";
 
-// .section-heading {
-//     margin-bottom: 30px;
-//     position: relative;
-//     z-index: 10;
-// }
+
 const About = () => {
   return (
     <>
