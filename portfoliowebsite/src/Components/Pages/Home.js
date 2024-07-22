@@ -1,10 +1,11 @@
 import React from "react";
-import Navbar from "../Layout/Navbar";
+
 import bgImage from "../assets/img/img-colored.jpg";
 import Portfolio from "./Portfolio";
 import Resume from "./Resume";
 import About from "./About";
 import Contact from "./Contact";
+import Footer from "./Footer";
 
 const Home = () => {
   return (
@@ -35,6 +36,7 @@ const Home = () => {
       <Resume/>
       <About/>
       <Contact/>
+       <Footer/>
 
     </>
   );
