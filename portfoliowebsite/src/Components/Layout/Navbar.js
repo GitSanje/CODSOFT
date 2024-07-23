@@ -124,7 +124,7 @@ const Navbar = () => {
               <HashLink
                 to={link.link}
                 smooth
-                className={`${
+                className={`transition-colors duration-300 ${
                   activeHash === link.link ? "text-lime-500" : ""
                 } hover:text-lime-500 cursor-pointer`}
               >

@@ -7,19 +7,15 @@ import Footer from "./Footer";
 import Home from './Home';
 
 const AllPage = () => {
-  const homeRef = useRef(null);
-  const portfolioRef = useRef(null);
-  const resumeRef = useRef(null);
-  const aboutRef = useRef(null);
-  const contactRef = useRef(null);
+ 
 
   return (
     <>
-      <section id="home" ref={homeRef}><Home/></section>
-      <section id="portfolio" ref={portfolioRef}><Portfolio/></section>
-      <section id="resume" ref={resumeRef}><Resume/></section>
-      <section id="about" ref={aboutRef}><About/></section>
-      <section id="contact" ref={contactRef}><Contact/></section>
+      <section id="home" ><Home/></section>
+      <section id="portfolio" ><Portfolio/></section>
+      <section id="resume" ><Resume/></section>
+      <section id="about" ><About/></section>
+      <section id="contact" ><Contact/></section>
       <Footer/>
     </>
   );
