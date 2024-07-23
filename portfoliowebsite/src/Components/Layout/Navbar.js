@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState(window.location.hash || "#home");
+  const { hash } = useLocation();
+
+  console.log(hash);
 
   let Links = [
-    { name: "HOME", link: "/" },
-    { name: "Portfolio", link: "/" },
-    { name: "Resume", link: "/" },
-    { name: "ABOUT", link: "/" },
-    { name: "CONTACT", link: "/" },
+    { name: "HOME", link: "#home" },
+    { name: "Portfolio", link: "#portfolio" },
+    { name: "Resume", link: "#resume" },
+    { name: "ABOUT", link: "#about" },
+    { name: "CONTACT", link: "#contact" },
   ];
 
   useEffect(() => {
@@ -22,11 +28,39 @@ const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
+    // window.addEventListener('hashchange', () => setActiveHash(window.location.hash ));
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      //window.removeEventListener('hashchange', () => setActiveHash(window.location.hash ));
     };
   }, []);
+
+  useEffect(() => {
+    const options = {
+      // root :null,
+      // rootMargin:"0px",
+      threshold: 0.1,
+    };
+    const sections = document.querySelectorAll("section");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveHash(`#${entry.target.id}`);
+
+        window.history.replaceState(null, "", `#${entry.target.id}`);
+        }
+      });
+    }, options);
+
+    sections.forEach((section) => observer.observe(section));
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
+  // const observer = new IntersectionObserver(callbackFunction, options)
+  //   observer.observe(elementToObserve)
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -36,45 +70,42 @@ const Navbar = () => {
     <>
       <nav
         className={` md:p-5 top-0 fixed w-full transition duration-300 bg-white z-50 ${
-          scrolled
-            ? "md:bg-white md:text-gray-600"
-            : "md:bg-transparent "
+          scrolled ? "md:bg-white md:text-gray-600" : "md:bg-transparent "
         }  `}
       >
         <div className="md:hidden px-7  p-4 text-gray-500">
           <button onClick={toggleMenu} className="focus:outline-none ">
-           {menuOpen ?  
-           <svg
-           className="w-6 h-6"
-           fill="none"
-           stroke="currentColor"
-           viewBox="0 0 24 24"
-           xmlns="http://www.w3.org/2000/svg"
-         >
-           <path
-             strokeLinecap="round"
-             strokeLinejoin="round"
-             strokeWidth="2"
-             d="M6 18L18 6M6 6l12 12"
-           ></path>
-         </svg>
-            :
-            <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            ></path>
-          </svg> 
-            }
-        
+            {menuOpen ? (
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            ) : (
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            )}
           </button>
         </div>
 
@@ -82,16 +113,27 @@ const Navbar = () => {
           className={`md:flex md:items-center justify-center text-lg uppercase px-7 ${
             menuOpen ? "block" : "hidden"
           }    md:z-auto z-[-1]`}
-
         >
           {Links.map((link) => (
-            <li key={link.name} className={`text-lg  md:ml-8 md:my-0 my-7  ${scrolled ?'md:text-gray-600' : 'md:text-white'} `}>
-              <a href={link.link} className="hover:text-lime-500 ">{link.name}</a>
+            <li
+              key={link.name}
+              className={`text-lg  md:ml-8 md:my-0 my-7  ${
+                scrolled ? "md:text-gray-600" : "md:text-white"
+              } `}
+            >
+              <HashLink
+                to={link.link}
+                smooth
+                className={`${
+                  activeHash === link.link ? "text-lime-500" : ""
+                } hover:text-lime-500 cursor-pointer`}
+              >
+                {link.name}
+              </HashLink>
             </li>
           ))}
         </ul>
       </nav>
-
     </>
   );
 };

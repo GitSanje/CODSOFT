@@ -51,10 +51,13 @@ const About = () => {
           </div>
         </div>
       </div>
-
+      <div className="div">
       <ClientTestimonial/>
       <MyServices/>
       <Blog/>
+
+      </div>
+    
       
     </>
   );

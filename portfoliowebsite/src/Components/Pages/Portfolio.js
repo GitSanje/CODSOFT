@@ -38,8 +38,8 @@ const Portfolio = () => {
             ))}
           </ul>
           <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 md:mx-20 lg:mx-32 pt-12 ">
-            {data.map((item) => (
-              <DisplayBox img={p1img} dis={item.dis} category={item.category} />
+            {data.map((item, index) => (
+              <DisplayBox key={index} img={p1img} dis={item.dis} category={item.category} />
             ))}
           </div>
         </div>
