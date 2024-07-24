@@ -5,6 +5,7 @@ import Button from "../partials/Button";
 import ClientTestimonial from "./ClientTestimonial";
 import MyServices from "./MyServices";
 import Blog from "./Blog";
+import { HashLink } from "react-router-hash-link";
 
 
 const About = () => {
@@ -36,11 +37,16 @@ const About = () => {
                 which roasted parts of sentences fly into your mouth.
               </p>
               <p className="flex space-x-4">
+              <HashLink
+              to="#contact"
+              >
                 <Button
                   content="Hire me"
                   link="#"
                 
                 />
+                  
+                </HashLink>
                 <Button
                   content="Download CV"
                   link="#"

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import classNames from 'classnames';
+
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeHash, setActiveHash] = useState(window.location.hash || "#home");
+  const [activeHash, setActiveHash] = useState(window.location.hash );
   const { hash } = useLocation();
 
   console.log(hash);
@@ -68,11 +70,16 @@ const Navbar = () => {
 
   return (
     <>
-      <nav
-        className={` md:p-5 top-0 fixed w-full transition duration-300  z-50 ${
-          scrolled ? "md:bg-white md:text-gray-600" : "md:bg-transparent "
-        } bg-white ` }
-      >
+     <nav
+      className={classNames(
+        'md:p-5 top-0 fixed w-full transition duration-300 z-50 ',
+        {
+          'bg-white md:bg-white md:text-gray-600': scrolled,
+          'bg-white md:bg-transparent': !scrolled
+        }
+      )}
+    >
+
         <div className="md:hidden px-7  p-4 text-gray-500">
           <button onClick={toggleMenu} className="focus:outline-none ">
             {menuOpen ? (
