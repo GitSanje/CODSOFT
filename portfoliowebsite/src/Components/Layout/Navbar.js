@@ -69,9 +69,9 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={` md:p-5 top-0 fixed w-full transition duration-300 bg-white z-50 ${
+        className={` md:p-5 top-0 fixed w-full transition duration-300  z-50 ${
           scrolled ? "md:bg-white md:text-gray-600" : "md:bg-transparent "
-        }  `}
+        } bg-white ` }
       >
         <div className="md:hidden px-7  p-4 text-gray-500">
           <button onClick={toggleMenu} className="focus:outline-none ">
