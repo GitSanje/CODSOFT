@@ -11,16 +11,54 @@ import {
 const Page = () => {
   const [displayTask, setDisplayTask] = useState(false);
 
-  const [Backlog, setBacklog] = useState([]);
-  const [Prioritized, setPrioritized] = useState([]);
-  const [Doing, setDoing] = useState([]);
-  const [onHold, setOnHold] = useState([]);
+  // const [Backlog, setBacklog] = useState([]);
+  // const [Prioritized, setPrioritized] = useState([]);
+  // const [Doing, setDoing] = useState([]);
+  // const [onHold, setOnHold] = useState([]);
 
-  console.log(Prioritized);
+  const [tasks, setTasks] = useState( () => {
+    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (savedTasks) {
+        return {
+          Backlog: savedTasks.Backlog || [],
+          Prioritized: savedTasks.Prioritized || [],
+          Doing: savedTasks.Doing || [],
+          OnHold: savedTasks.OnHold || [],
+        };
+      }
+    return {
+      Backlog: [],
+      Prioritized: [],
+      Doing: [],
+      OnHold: [],
+    };
+  });
 
-  const getFirstWord = (taskName) => {
-    return taskName.split("_").map((word) => word.charAt(0).toUperrCase());
+  console.log("tasks",tasks);
+
+ 
+  const saveTasks = () => {
+    try {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    } catch (error) {
+      console.error("Error saving tasks to local storage:", error);
+    }
   };
+
+  // useEffect(() => {
+  //   loadTasks();
+  // }, []);
+
+
+  useEffect(() => {
+    saveTasks()
+  }, [tasks])
+
+  // console.log(Prioritized);
+
+  // const getFirstWord = (taskName) => {
+  //   return taskName.split("_").map((word) => word.charAt(0).toUperrCase());
+  // };
 
   useEffect(() => {
     const storedDisplayTask = localStorage.getItem("displayTask");
@@ -29,7 +67,7 @@ const Page = () => {
     }
   }, []);
 
-  useEffect(() => {});
+
 
   const toggle = () => {
     const newDisplayTask = !displayTask;
@@ -37,68 +75,62 @@ const Page = () => {
     localStorage.setItem("displayTask", newDisplayTask);
   };
 
-  const removeTaskFromOtherColumns = (task, currentColumn) => {
-    const columnSetters = [setBacklog, setPrioritized, setDoing, setOnHold];
-    columnSetters
-      .filter((setter) => setter !== currentColumn)
-      .forEach((setter) => {
-        setter((prev) => prev.filter((t) => t !== task));
-      });
-  };
 
-  const handleOnDrop = (columnSetter, task) => {
-    columnSetter((prev) => prev.filter((t) => t !== task));
-    columnSetter((prev) => [...prev, task]);
-    removeTaskFromOtherColumns(task, columnSetter);
+
+ const removeTaskFromOtherColumns = (task, colName) => {
+  setTasks((prevTasks) => {
+    const updatedTasks = {...prevTasks};
+    Object.keys(updatedTasks).forEach((key) => {
+      if(key !== colName){
+        updatedTasks[key] = updatedTasks[key].filter(t => t !== task);
+      }
+    })
+
+    return updatedTasks;
+  })
+
+ }
+  const handleOnDrop = (colName) => (e) => {
    
-    
-  };
-
-  const handleOnDrops = (columnSetter) => (e) => {
     const task = e.dataTransfer.getData("text");
-    if (task) {
-      handleOnDrop(columnSetter, task);
+
+    if(task) {
+
+      setTasks((prevTasks) => {
+        const updatedTasks = {...prevTasks};
+        updatedTasks[colName] = [...updatedTasks[colName].filter( (t) => t !== task), task];
+        removeTaskFromOtherColumns(task, colName);
+        return updatedTasks;
+      })
     }
-  };
+  }
+
+
+
 
   return (
     <>
       {displayTask && <NewTask fun={toggle} />}
       <div className="pt-16 px-8  h-screen ">
         <div className="grid grid-cols-4 gap-8 min-w-max">
-          <Column
-            colType="Backlog"
-            icon={faTasks}
-            cardCount={1}
-            fun={toggle}
-            handleOnDrop={handleOnDrops(setBacklog)}
-            task={Backlog}
-          />
-          <Column
-            colType="Prioritized"
-            icon={faFlag}
-            cardCount={1}
-            fun={toggle}
-            handleOnDrop={handleOnDrops(setPrioritized)}
-            task={Prioritized}
-          />
-          <Column
-            colType="Doing"
-            icon={faPencilAlt}
-            cardCount={1}
-            fun={toggle}
-            handleOnDrop={handleOnDrops(setDoing)}
-            task={Doing}
-          />
-          <Column
-            islast={true}
-            colType="On hold"
-            icon={faClock}
-            cardCount={2}
-            fun={toggle}
-            handleOnDrop={handleOnDrops(setOnHold)}
-            task={onHold}
-          />
+
+        {Object.keys(tasks).map((colType) => (
+            <Column
+              key={colType}
+              colType={colType}
+              icon={
+                colType === "Backlog" ? faTasks :
+                colType === "Prioritized" ? faFlag :
+                colType === "Doing" ? faPencilAlt :
+                faClock
+              }
+              cardCount={tasks[colType].length}
+              fun={toggle}
+              handleOnDrop={handleOnDrop(colType)}
+              task={tasks[colType]}
+            />
+          ))}
+         
         </div>
       </div>
     </>
@@ -106,3 +138,5 @@ const Page = () => {
 };
 
 export default Page;
+
+
