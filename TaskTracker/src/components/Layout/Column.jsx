@@ -3,15 +3,35 @@ import TaskDisplay from "./TaskDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getFooterVal } from "../util/getColorAndFooter";
 
-const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
+const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, task }) => {
+
+
+  // we will store data for all the dropped tasks
+
+  
+
+  const handleOnDrag = (e, name) => {
+    e.dataTransfer.setData("text", name);
+  
+  }
+  
+  {/* The div we are dropping the task in */}
+  const handleOnDragOver = (e) => {
+    e.preventDefault();
+  }
+ 
+  const updateColType = colType.toLowerCase().replace(/\s+/g, "");
   const iconColorClass = getColor(icon);
   const footerDescription = getFooterVal(
-    colType.toLowerCase().replace(/\s+/g, "")
+    updateColType
   );
 
   return (
     <>
-      <div className="relative">
+      <div className="relative"
+      onDragOver={handleOnDragOver}
+      onDrop={handleOnDrop}
+      >
         
         <div className="mb-7">
           {!islast && (
@@ -37,11 +57,20 @@ const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col space-y-4 ">
-          <TaskDisplay />
-          <TaskDisplay />
-          <TaskDisplay />
-          
+        <div className="flex flex-col space-y-4 "
+        
+        >
+          <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "_task1"} />
+          {/* <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "task2"} />
+          <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "task3"}   /> */}
+         
+          {task && 
+             task.map(( taskname) => {
+             return ( 
+             <TaskDisplay handleOnDrag={handleOnDrag} taskname={taskname}  />
+            )
+             })
+          }
         </div>
         <p className="text-gray-500 text-center mt-4 break-words w-full max-w-xs">
         {footerDescription}

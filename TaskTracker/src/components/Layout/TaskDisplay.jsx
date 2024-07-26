@@ -1,9 +1,15 @@
 import React from 'react'
 
-const TaskDisplay = () => {
+const TaskDisplay = ({handleOnDrag, taskname}) => {
+ 
   return (
     <>
-    <div className="bg-white rounded-md border-2 shadow-sm hover:shadow-md cursor-pointer p-5">
+    <div className="bg-white rounded-md border-2 shadow-sm hover:shadow-md cursor-pointer p-5"
+    draggable
+    onDragStart={(e) => {
+      handleOnDrag(e, taskname)
+    }}
+    >
       
       <div className="flex flex-col space-y-2">
         
