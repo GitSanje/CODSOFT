@@ -3,12 +3,12 @@ import TaskDisplay from "./TaskDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getFooterVal } from "../util/getColorAndFooter";
 
-const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, task }) => {
+const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, task , inputObj ={}}) => {
 
 
   // we will store data for all the dropped tasks
 
-  
+  console.log("from col"+colType, inputObj);
 
   const handleOnDrag = (e, name) => {
     e.dataTransfer.setData("text", name);
@@ -48,7 +48,7 @@ const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, t
             <div
               className="absolute -inset-y-12 right-1 flex items-center justify-center text-white bg-blue-500 rounded-full cursor-pointer hover:bg-blue-700"
               style={{ width: "30px", height: "30px" }}
-              onClick={fun}
+              onClick={() => fun(colType)}
             >
               <i className="fa-solid fa-plus"></i>
             </div>
@@ -70,7 +70,9 @@ const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, t
         <div className="flex flex-col space-y-4 "
         
         >
+         
           <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "_task1"} />
+          
           {/* <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "task2"} />
           <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "task3"}   /> */}
          
@@ -81,10 +83,15 @@ const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, t
             )
              })
           }
+
+         {inputObj  && (
+            <TaskDisplay handleOnDrag={handleOnDrag} taskname={inputObj.taskName} DataObj={inputObj} />
+          )}
         </div>
         <p className="text-gray-500 text-center mt-4 break-words w-full max-w-xs">
         {footerDescription}
       </p>
+      
         {!islast && (
           <div
             className="absolute inset-y-7 -right-4 w-px bg-slate-400 h-screen"

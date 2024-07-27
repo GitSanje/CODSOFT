@@ -1,7 +1,12 @@
 
 // First try naive approach
 
+ // const [Backlog, setBacklog] = useState([]);
+  // const [Prioritized, setPrioritized] = useState([]);
+  // const [Doing, setDoing] = useState([]);
+  // const [onHold, setOnHold] = useState([]);
 
+  
 // const handleOnDropBacklog = (e) => {
 //     // Set the dropped task to Backlog state
 //       if(Backlog){
