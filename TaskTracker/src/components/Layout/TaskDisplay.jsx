@@ -1,14 +1,30 @@
 import React from 'react'
 
 const TaskDisplay = ({handleOnDrag, taskname}) => {
+
+  const handleDragEnd = (e) => {
+    
+    e.target.style.visibility = 'visible';
+    // requestAnimationFrame(() => {
+    //   const placeholder = e.target.parentNode.querySelector('.p-12.border-2.border-dashed.border-gray-500');
+    //   if (placeholder) {
+    //     placeholder.remove();
+    // }
+    // })
+   
+  };
  
   return (
     <>
-    <div className="bg-white rounded-md border-2 shadow-sm hover:shadow-md cursor-pointer p-5"
+   
+
+    <div className="bg-white rounded-md border-2 shadow-sm hover:shadow-md cursor-pointer p-5  transition duration-300 ease-in-out"
     draggable
     onDragStart={(e) => {
       handleOnDrag(e, taskname)
+      
     }}
+    onDragEnd={handleDragEnd}
     >
       
       <div className="flex flex-col space-y-2">

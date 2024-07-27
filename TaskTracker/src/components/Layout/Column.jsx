@@ -12,6 +12,16 @@ const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, t
 
   const handleOnDrag = (e, name) => {
     e.dataTransfer.setData("text", name);
+    
+   
+
+    requestAnimationFrame(() => {
+      e.target.style.visibility = 'hidden';
+      // const placeholder = document.createElement("div")
+      // placeholder.className = " p-12 border-2 border-dashed border-gray-500"
+      // e.target.parentNode.insertBefore(placeholder,e.target);
+      
+    });
   
   }
   

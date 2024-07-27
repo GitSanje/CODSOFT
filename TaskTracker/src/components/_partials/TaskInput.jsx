@@ -11,7 +11,7 @@ const TaskInput = ({ classNameInput, label, heading, ...props }) => {
           'border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500',
           classNameInput
         )}
-        style={{ color: "#6F83CB" }}
+       
         {...props}
       />
     </div>

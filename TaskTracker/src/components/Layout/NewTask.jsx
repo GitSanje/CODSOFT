@@ -9,6 +9,7 @@ const NewTask = ({fun}) => {
   return (
     <>
       <AnimatePresence>
+
       <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
@@ -45,6 +46,7 @@ const NewTask = ({fun}) => {
               <TaskInput
                 heading="who is requesting?"
                 label="Insert your name"
+                
               />
             </div>
 
