@@ -54,10 +54,7 @@ const TaskContextProvider = ({ children }) => {
   }, [tasks, inputs]);
 
   const handlecreateTask = (colType, objData) => {
-    const taskName =
-      tasks[colType] && tasks[colType].length > 0
-        ? `${colType}task_${tasks[colType].length + 1}`
-        : `${colType}task_1`;
+    const taskName =`${colType}task_${objData.id}`
 
     if (objData) {
       const newObjectData = {

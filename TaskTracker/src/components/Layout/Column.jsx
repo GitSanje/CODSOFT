@@ -69,8 +69,16 @@ const {handleOnDrop,tasks,inputs} = useContext(TaskContext);
 
           {task &&
             task.map((taskname) => {
-              return (
-                <TaskDisplay  taskname={taskname} />
+              const inputObj =  inputs.find((item) => item.taskName === taskname) ;
+              const { name, heading, description, taskName } = inputObj || {};
+                 return (
+                  <TaskDisplay
+                  key={taskName}
+                  name={name }
+                  heading={heading }
+                  description={description }
+                  taskname={taskName}
+                />
               );
             })}
 
