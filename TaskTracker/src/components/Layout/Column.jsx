@@ -1,48 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TaskDisplay from "./TaskDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getFooterVal } from "../util/getColorAndFooter";
+import { TaskContext } from "../state/TaskContext";
 
-const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, task , inputObj ={}}) => {
+const Column = ({
+  islast = false,
+  colType,
+  icon,
+  cardCount,
+  fun,
 
+}) => {
 
-  // we will store data for all the dropped tasks
+const {handleOnDrop,tasks,inputs} = useContext(TaskContext);
 
-  console.log("from col"+colType, inputObj);
+  const task=tasks[colType];
 
-  const handleOnDrag = (e, name) => {
-    e.dataTransfer.setData("text", name);
-    
-   
-
-    requestAnimationFrame(() => {
-      e.target.style.visibility = 'hidden';
-      // const placeholder = document.createElement("div")
-      // placeholder.className = " p-12 border-2 border-dashed border-gray-500"
-      // e.target.parentNode.insertBefore(placeholder,e.target);
-      
-    });
-  
+  {
+    /* The div we are dropping the task in */
   }
-  
-  {/* The div we are dropping the task in */}
   const handleOnDragOver = (e) => {
     e.preventDefault();
-  }
- 
+  };
+
   const updateColType = colType.toLowerCase().replace(/\s+/g, "");
   const iconColorClass = getColor(icon);
-  const footerDescription = getFooterVal(
-    updateColType
-  );
+  const footerDescription = getFooterVal(updateColType);
 
   return (
     <>
-      <div className="relative"
-      onDragOver={handleOnDragOver}
-      onDrop={handleOnDrop}
+      <div
+        className="relative"
+        onDragOver={handleOnDragOver}
+        onDrop={handleOnDrop(colType)}
       >
-        
         <div className="mb-7">
           {!islast && (
             <div
@@ -67,31 +59,26 @@ const Column = ({ islast = false, colType, icon, cardCount, fun, handleOnDrop, t
             </p>
           </div>
         </div>
-        <div className="flex flex-col space-y-4 "
-        
-        >
-         
-          <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "_task1"} />
-          
-          {/* <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "task2"} />
-          <TaskDisplay handleOnDrag={handleOnDrag} taskname={colType + "task3"}   /> */}
-         
-          {task && 
-             task.map(( taskname) => {
-             return ( 
-             <TaskDisplay handleOnDrag={handleOnDrag} taskname={taskname}  />
-            )
-             })
-          }
+        <div className="flex flex-col space-y-4 ">
+          {/* <TaskDisplay
+            handleOnDrag={handleOnDrag}
+            taskname={colType + "_task1"}
+          /> */}
 
-         {inputObj  && (
-            <TaskDisplay handleOnDrag={handleOnDrag} taskname={inputObj.taskName} DataObj={inputObj} />
-          )}
+         
+
+          {task &&
+            task.map((taskname) => {
+              return (
+                <TaskDisplay  taskname={taskname} />
+              );
+            })}
+
         </div>
         <p className="text-gray-500 text-center mt-4 break-words w-full max-w-xs">
-        {footerDescription}
-      </p>
-      
+          {footerDescription}
+        </p>
+
         {!islast && (
           <div
             className="absolute inset-y-7 -right-4 w-px bg-slate-400 h-screen"

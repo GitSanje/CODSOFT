@@ -1,18 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { TaskContext } from '../state/TaskContext';
 
-const TaskDisplay = ({handleOnDrag, taskname, DataObj = {} }) => {
+const TaskDisplay = ({ taskname }) => {
+
+  
+  const {inputs} = useContext(TaskContext);
 
   const handleDragEnd = (e) => {
     
     e.target.style.visibility = 'visible';
-    // requestAnimationFrame(() => {
-    //   const placeholder = e.target.parentNode.querySelector('.p-12.border-2.border-dashed.border-gray-500');
-    //   if (placeholder) {
-    //     placeholder.remove();
-    // }
-    // })
-   
+
   };
+  const handleOnDrag = (e, name) => {
+      e.dataTransfer.setData("text", name);
+    console.log(name);
+      requestAnimationFrame(() => {
+        e.target.style.visibility = "hidden";
+      });
+  };
+
+  
  
   return (
     <>
@@ -24,19 +31,19 @@ const TaskDisplay = ({handleOnDrag, taskname, DataObj = {} }) => {
       handleOnDrag(e, taskname)
       
     }}
-    onDragEnd={handleDragEnd}
+     onDragEnd={handleDragEnd}
     >
       
       <div className="flex flex-col space-y-2">
         
         <div className="text-black text-start text-md font-semibold ">
-         { DataObj.heading || "Develop New E-reader"}
+         { inputs[inputs.length - 1].heading || "Develop New E-reader"}
       </div>
       <h3 className="text-gray-600 text-start text-sm font-medium ">
-      { DataObj.name || "Shirley Bennett "}
+      { inputs[inputs.length - 1].name || "Shirley Bennett "}
       </h3>
       <p className="text-gray-600 text-start text-sm break-words w-full max-w-72 ">
-      {DataObj.description || " Re-design our current logo to a new updated version "}
+      {inputs[inputs.length - 1].description || " Re-design our current logo to a new updated version "}
       </p>
 
       </div>

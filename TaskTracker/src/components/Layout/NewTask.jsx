@@ -1,36 +1,43 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import TaskInput from "../_partials/TaskInput";
 import TaskTextArea from "../_partials/TaskTextArea";
 import { motion, AnimatePresence } from "framer-motion";
 import { stripWords } from "../util/stripWord";
+import { TaskContext } from "../state/TaskContext";
 
-const NewTask = ({fun, taskCol, handlecreateTask}) => {
+import { v4 as uuidv4 } from "uuid";
+
+const NewTask = ({fun, taskCol}) => {
 
 
-  const colV = stripWords(taskCol);
-  console.log(taskCol,colV[0])
-  const initialInputs = {
-    name: "",
-    heading: "",
-    description: ""
-  };
-  const [inputs, setInputs] = useState(initialInputs);
+  //const colV = stripWords(taskCol);
+
+
+  const { initialInput, handlecreateTask} = useContext(TaskContext);  
   
+  const [input, setInput] = useState(initialInput);
+
+
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+     setInput((prev) => {
+      return {...prev, id:uuidv4(),[name]:value, }
+     });
   };
+  
+
+
 
   const handleSubmit =  (e) => {
     e.preventDefault();
+    
     window.alert("task created")
     
-    handlecreateTask(colV[0], inputs);
-    setInputs(initialInputs);
+    handlecreateTask(taskCol, input);
+    setInput(initialInput);
+    
     
    
   };
@@ -76,7 +83,7 @@ const NewTask = ({fun, taskCol, handlecreateTask}) => {
                         heading="who is requesting?"
                         label="Insert your name"
                         name="name"
-                        value={inputs.name}
+                        value={input.name}
                         onChange={handleInput}
                       />
                     </div>
@@ -86,7 +93,7 @@ const NewTask = ({fun, taskCol, handlecreateTask}) => {
                         heading="What?"
                         label="Briefly describe the task"
                         name="heading"
-                        value={inputs.heading}
+                        value={input.heading}
                         onChange={handleInput}
                       />
                     </div>
@@ -96,7 +103,7 @@ const NewTask = ({fun, taskCol, handlecreateTask}) => {
                         label="Provide further detail about about the task (this field is optional)"
                         name="description"
                         onChange={handleInput}
-                        value={inputs.description}
+                        value={input.description}
                       />
                     </div>
                 
@@ -105,8 +112,9 @@ const NewTask = ({fun, taskCol, handlecreateTask}) => {
               <div className="bg-blue-500 p-4 text-center">
                 <button
                 type="submit"
-                 className="text-white  font-semibold">
-
+                 className="text-white  font-semibold"
+                 >
+        
                   Create New Task{" "}
                   <span className="text-gray-400 text-md ">
                     {" "}
