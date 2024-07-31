@@ -1,10 +1,12 @@
-import React, { useContext } from 'react'
-import { TaskContext } from '../state/TaskContext';
+import React, { useContext, useState } from 'react'
+import TaskUpdateCard from './TaskUpdateCard';
+import Model from '../Wrapper/Model';
 
 const TaskDisplay = ({ name, heading, description,taskname }) => {
 
   
 
+ const [isVisible, setIsVisible] = useState(false);
 
   const handleDragEnd = (e) => {
     
@@ -19,7 +21,16 @@ const TaskDisplay = ({ name, heading, description,taskname }) => {
       });
   };
 
-  
+  const handleOnClick =() => {
+    console.log("setIsVisible", isVisible)
+    setIsVisible(true);
+
+  }
+  const handleOnClose =() => {
+    
+    setIsVisible(false);
+
+  }
  
   return (
     <>
@@ -32,6 +43,7 @@ const TaskDisplay = ({ name, heading, description,taskname }) => {
       
     }}
      onDragEnd={handleDragEnd}
+     onClick={handleOnClick}
     >
       
       <div className="flex flex-col space-y-2">
@@ -48,6 +60,10 @@ const TaskDisplay = ({ name, heading, description,taskname }) => {
 
       </div>
     </div>
+
+    <Model isVisible={isVisible} onClose={handleOnClose}>
+      <TaskUpdateCard />
+    </Model>
       
     </>
   )
