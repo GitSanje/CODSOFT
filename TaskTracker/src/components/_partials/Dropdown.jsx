@@ -1,7 +1,8 @@
 import React from 'react'
 
-const Dropdown = ({items, onHover, onLeave}) => {
+const Dropdown = ({items, onHover, onLeave,handleDropdown}) => {
     
+
   return (
     <>
   
@@ -15,6 +16,7 @@ const Dropdown = ({items, onHover, onLeave}) => {
             className='text-base font-semibold flex flex-row items-center hover:text-blue-400 cursor-pointer hover:bg-gray-200 py-2'
             onMouseEnter={() => onHover(item)}
             onMouseLeave={onLeave}
+            onClick={() =>handleDropdown(item)}
           >
             <div className={`w-4 h-4 rounded-sm mx-7 ${item.color}`}></div>
             <p>{item.label}</p>

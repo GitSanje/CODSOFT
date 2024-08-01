@@ -10,6 +10,8 @@ import Dropdown from "../_partials/Dropdown";
 
 const TaskUpdateCard = () => {
   const [hoveredItem, setHoveredItesm] = useState(null);
+  const [dropdown, setDropdown] = useState(false);
+  const [clickItem, setClickItem] = useState(null);
 
   const items = [
     { label: "High", color: "bg-red-600" },
@@ -20,9 +22,18 @@ const TaskUpdateCard = () => {
   const handleHover = (item) => {
     setHoveredItesm(item);
   };
-  const handleLeave = (item) => {
+  const handleLeave = () => {
     setHoveredItesm(null);
   };
+  const handleDropdown = (item) => {
+    setClickItem(item);
+    setDropdown(false);
+  };
+
+  const toggleDropdown = () => {
+    setDropdown(!dropdown);
+  };
+
   console.log(hoveredItem);
 
   return (
@@ -57,51 +68,52 @@ const TaskUpdateCard = () => {
       </div>
 
       <div className="bg-white py-4 px-8 absolute left-full -top-4 shadow-md w-full h-full rounded-md ml-4 overflow-y">
-        <p className="text-base text-gray-500">Current Phase</p>
-        <h1 className="text-xl font-bold">
-          Backlog{" "}
-          <span className="text-sm text-green-700">
-            <FontAwesomeIcon icon={faTasks} />
-          </span>
-        </h1>
+        <div className="">
+          <p className="text-base text-gray-500">Current Phase</p>
+          <h1 className="text-xl font-bold">
+            Backlog{" "}
+            <span className="text-sm text-green-700">
+              <FontAwesomeIcon icon={faTasks} />
+            </span>
+          </h1>
+        </div>
 
-        <p className="text-lg font-semibold border-b-2 border-solid pb-4 pt-7">
-          {" "}
-          Fill out the fields below and move the card to the next phase
-        </p>
-     
-        <h3 className="text-lg font-semibold py-4">Task Priority</h3>
-        <p className="text-base text-gray-500 ">
-          Enter the priority related to this task
-        </p>
-        <div>
-          <i
-            className="fa-solid fa-tag text-gray-500"
-            style={{ transform: "rotate(45deg" }}
-          ></i>
-        
-          <span className="text-base text-gray-500 border-b-2 border-dotted ml-2 hover:text-blue-400 hover:border-blue-400 cursor-pointer">
-            Add new label
-          </span>
+        <div className="">
+          <p className="text-lg font-medium border-b-2 border-solid pb-4 pt-7">
+            {" "}
+            Fill out the fields below and move the card to the next phase
+          </p>
+        </div>
+        <div className="">
+          <h3 className="text-lg font-semibold pt-4">Task Priority</h3>
+          <p className="text-base text-gray-500 pb-7">
+            Enter the priority related to this task
+          </p>
+          <div className=" relative pb-2 ">
+
          
-
-
-
-
-          <div>
-            <Dropdown items={items} onHover={handleHover} onLeave={handleLeave} />
-          </div>
-          {hoveredItem && (
-              <div className="flex items-center space-x-4">
-                <div
-                  className={`w-4 h-4 rounded-sm ${hoveredItem.color}`}
-                ></div>
-                <p>{hoveredItem.label}</p>
-              </div>
-            )}
-          
-            
+            <i
+              className="fa-solid fa-tag text-gray-500"
+              style={{ transform: "rotate(45deg" }}
+            ></i>
+  
+            <span className="text-base text-gray-500 border-b-2 border-dotted ml-2 hover:text-blue-400 hover:border-blue-400 cursor-pointer "
+            onClick={toggleDropdown}>
+              Add new label
+            </span>
+         {dropdown && 
+         ( <Dropdown items={items} onHover={handleHover} onLeave={handleLeave} handleDropdown={handleDropdown} />)}
          
+          {hoveredItem  ? (
+            <div className=" absolute font-medium -top-7 flex items-center space-x-2">
+              <div className={`w-4 h-4 rounded-sm ${hoveredItem.color}`}></div>
+              <p>{hoveredItem.label}</p>
+            </div>
+          ): clickItem && (<div className=" absolute font-medium -top-7 flex items-center space-x-2">
+            <div className={`w-4 h-4 rounded-sm ${clickItem.color}`}></div>
+            <p>{clickItem.label}</p>
+          </div>) }
+             </div>
         </div>
       </div>
     </div>
