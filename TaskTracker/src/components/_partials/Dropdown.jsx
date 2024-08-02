@@ -6,7 +6,7 @@ const Dropdown = ({items, onHover, onLeave,handleDropdown}) => {
   return (
     <>
   
-    <div className="bg-white shadow-lg border-2 border-blue-400 w-2/3">
+    <div className="bg-white shadow-lg border-2 border-blue-400 w-2/3 z-50">
         <p className='text-base text-gray-500 p-2'>Add lables</p>
 
         <ul className='flex flex-col space-y-4 '>

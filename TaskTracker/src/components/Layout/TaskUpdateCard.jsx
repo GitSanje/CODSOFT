@@ -7,11 +7,17 @@ import {
   faTasks,
 } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "../_partials/Dropdown";
+import DateTime from "../_partials/DateTime";
 
 const TaskUpdateCard = () => {
   const [hoveredItem, setHoveredItesm] = useState(null);
   const [dropdown, setDropdown] = useState(false);
   const [clickItem, setClickItem] = useState(null);
+  const [dateTime, setDateTime] = useState({
+    startDate:"",
+    endDateTime:""
+  });
+  console.log(dateTime);
 
   const items = [
     { label: "High", color: "bg-red-600" },
@@ -33,11 +39,11 @@ const TaskUpdateCard = () => {
   const toggleDropdown = () => {
     setDropdown(!dropdown);
   };
-
-  console.log(hoveredItem);
+ 
+ 
 
   return (
-    <div className="relative w-full px-4  pb-28">
+    <div className="relative w-full px-4  pb-60">
       <div className="flex flex-col space-y-2">
         <h1 className="text-xl text-blue-500 font-bold">Develop new Eraser</h1>
         <h5 className="text-base text-gray-500">
@@ -90,31 +96,56 @@ const TaskUpdateCard = () => {
             Enter the priority related to this task
           </p>
           <div className=" relative pb-2 ">
-
-         
             <i
               className="fa-solid fa-tag text-gray-500"
               style={{ transform: "rotate(45deg" }}
             ></i>
-  
-            <span className="text-base text-gray-500 border-b-2 border-dotted ml-2 hover:text-blue-400 hover:border-blue-400 cursor-pointer "
-            onClick={toggleDropdown}>
+
+            <span
+              className="text-base text-gray-500 border-b-2 border-dotted ml-2 hover:text-blue-400 hover:border-blue-400 cursor-pointer "
+              onClick={toggleDropdown}
+            >
               Add new label
             </span>
-         {dropdown && 
-         ( <Dropdown items={items} onHover={handleHover} onLeave={handleLeave} handleDropdown={handleDropdown} />)}
-         
-          {hoveredItem  ? (
-            <div className=" absolute font-medium -top-7 flex items-center space-x-2">
-              <div className={`w-4 h-4 rounded-sm ${hoveredItem.color}`}></div>
-              <p>{hoveredItem.label}</p>
-            </div>
-          ): clickItem && (<div className=" absolute font-medium -top-7 flex items-center space-x-2">
-            <div className={`w-4 h-4 rounded-sm ${clickItem.color}`}></div>
-            <p>{clickItem.label}</p>
-          </div>) }
-             </div>
+            {dropdown && (
+              <Dropdown
+                items={items}
+                onHover={handleHover}
+                onLeave={handleLeave}
+                handleDropdown={handleDropdown}
+              />
+            )}
+
+            {hoveredItem ? (
+              <div className=" absolute font-medium -top-7 flex items-center space-x-2">
+                <div
+                  className={`w-4 h-4 rounded-sm ${hoveredItem.color}`}
+                ></div>
+                <p>{hoveredItem.label}</p>
+              </div>
+            ) : (
+              clickItem && (
+                <div className=" absolute font-medium -top-7 flex items-center space-x-2">
+                  <div
+                    className={`w-4 h-4 rounded-sm ${clickItem.color}`}
+                  ></div>
+                  <p>{clickItem.label}</p>
+                </div>
+              )
+            )}
+          </div>
         </div>
+        <h3 className="text-lg font-semibold pt-4">Start Date</h3>
+        <p className="text-base text-gray-500 pb-2">
+          Insert the exact date this task will began
+        </p>
+        <DateTime setDateTime={setDateTime}/>
+
+        <h3 className="text-lg font-semibold pt-4">End Date</h3>
+        <p className="text-base text-gray-500 pb-2">
+          Insert the expected date to finish the  task 
+        </p>
+        <DateTime showTime={true} setDateTime={setDateTime}/>
       </div>
     </div>
   );
