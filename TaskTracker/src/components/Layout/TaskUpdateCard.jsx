@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
@@ -8,72 +8,70 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "../_partials/Dropdown";
 import DateTime from "../_partials/DateTime";
+import Button from "../_partials/Button";
+import { UpdateTaskContext } from "../state/Tasks/UpdateTaskProvider";
+import DateTimeContextProvider, {
+  DateTimeContext,
+} from "../state/DateTime/DateTimeContextProvider";
 
-const TaskUpdateCard = () => {
-  const [hoveredItem, setHoveredItesm] = useState(null);
-  const [dropdown, setDropdown] = useState(false);
-  const [clickItem, setClickItem] = useState(null);
-  const [dateTime, setDateTime] = useState({
-    startDate:"",
-    endDateTime:""
-  });
-  console.log(dateTime);
-
+const TaskUpdateCard = ({ name, heading, dis }) => {
   const items = [
     { label: "High", color: "bg-red-600" },
     { label: "Low", color: "bg-green-600" },
     { label: "Medium", color: "bg-blue-600" },
   ];
 
-  const handleHover = (item) => {
-    setHoveredItesm(item);
-  };
-  const handleLeave = () => {
-    setHoveredItesm(null);
-  };
-  const handleDropdown = (item) => {
-    setClickItem(item);
-    setDropdown(false);
-  };
+  const {
+    hoveredItem,
+    handleHover,
+    handleLeave,
+    handleDropdown,
+    toggleDropdown,
+    clickItem,
+    dropdown,
+    dateTime,
+    setDateTime,
+  } = useContext(UpdateTaskContext);
 
-  const toggleDropdown = () => {
-    setDropdown(!dropdown);
-  };
- 
- 
+  // const {dateTime} = useContext(DateTimeContext)
+
+  console.log(dateTime, "taskupdate");
 
   return (
-    <div className="relative w-full px-4  pb-60">
-      <div className="flex flex-col space-y-2">
-        <h1 className="text-xl text-blue-500 font-bold">Develop new Eraser</h1>
-        <h5 className="text-base text-gray-500">
-          Created by Sanjay Karki on Jul 30, 2020 8:49 PM
-        </h5>
-      </div>
+    <div className="relative w-full px-4 pb-60 ">
+      <div className="w-96 h-96">
+        <div className="flex flex-col space-y-2 ">
+          <h1 className="text-xl text-blue-500 font-bold">{heading}</h1>
+          <h5 className="text-base text-gray-500">
+            Created by Sanjay Karki on Jul 30, 2020 8:49 PM
+          </h5>
+        </div>
 
-      <div className="mt-4 ">
-        <h3 className="text-lg font-medium pt-7 pb-4">Initial form</h3>
-        <div className="flex flex-col space-y-4 bg-white p-7 rounded-md">
-          <div>
-            <h3 className="text-black text-base font-semibold">
-              *Who is creating?
-            </h3>
-            <p className="text-base text-gray-500">Jeff Bezos</p>
-          </div>
-          <div>
-            <h3 className="text-black text-base font-semibold">*What?</h3>
-            <p className="text-base text-gray-500">Develop new Ereader</p>
-          </div>
-          <div>
-            <h3 className="text-black text-base font-semibold">More Info</h3>
-            <p className="text-base text-gray-500">
-              Digital reading is a new trend we need to develop a new device
-            </p>
+        <div className="mt-4 ">
+          <h3 className="text-lg font-medium pt-7 pb-4">Initial form</h3>
+          <div className="flex flex-col space-y-4 bg-white p-7 rounded-md">
+            <div>
+              <h3 className="text-black text-base font-semibold">
+                *Who is creating?
+              </h3>
+              <p className="text-base text-gray-500">{name}</p>
+            </div>
+            <div>
+              <h3 className="text-black text-base font-semibold">*What?</h3>
+              <p className="text-base text-gray-500">{heading}</p>
+            </div>
+            <div>
+              <h3 className="text-black text-base font-semibold ">More Info</h3>
+              <p className="text-base text-gray-500 text-wrap">
+                {dis}
+                {dis}
+              </p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white py-4 px-8 absolute left-full -top-4 shadow-md w-full h-full rounded-md ml-4 overflow-y">
+      <div className="bg-white py-4 pl-8 pr-16 absolute left-full -top-4 shadow-md w-full h-full rounded-md ml-4 overflow-y">
         <div className="">
           <p className="text-base text-gray-500">Current Phase</p>
           <h1 className="text-xl font-bold">
@@ -135,17 +133,24 @@ const TaskUpdateCard = () => {
             )}
           </div>
         </div>
+
         <h3 className="text-lg font-semibold pt-4">Start Date</h3>
         <p className="text-base text-gray-500 pb-2">
           Insert the exact date this task will began
         </p>
-        <DateTime setDateTime={setDateTime}/>
+        <DateTimeContextProvider>
+          <DateTime setDateTime={setDateTime} />
+        </DateTimeContextProvider>
 
         <h3 className="text-lg font-semibold pt-4">End Date</h3>
         <p className="text-base text-gray-500 pb-2">
-          Insert the expected date to finish the  task 
+          Insert the expected date to finish the task
         </p>
-        <DateTime showTime={true} setDateTime={setDateTime}/>
+        <DateTimeContextProvider>
+          <DateTime showTime={true} setDateTime={setDateTime} />
+        </DateTimeContextProvider>
+
+        <Button className="mt-4 px-7 ">Save</Button>
       </div>
     </div>
   );

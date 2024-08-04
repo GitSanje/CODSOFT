@@ -1,21 +1,13 @@
 import React, { useContext, useState } from "react";
-import TaskDisplay from "./TaskDisplay";
+import TaskDisplay from "./TaskDisplay/TaskDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getColor, getFooterVal } from "../util/getColorAndFooter";
-import { TaskContext } from "../state/TaskContext";
+import { getColor, getFooterVal } from "../../util/getColorAndFooter";
+import { TaskContext } from "../../state/Tasks/TaskContext";
 
-const Column = ({
-  islast = false,
-  colType,
-  icon,
-  cardCount,
-  fun,
+const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
+  const { handleOnDrop, tasks, inputs } = useContext(TaskContext);
 
-}) => {
-
-const {handleOnDrop,tasks,inputs} = useContext(TaskContext);
-
-  const task=tasks[colType];
+  const task = tasks[colType];
 
   {
     /* The div we are dropping the task in */
@@ -60,28 +52,23 @@ const {handleOnDrop,tasks,inputs} = useContext(TaskContext);
           </div>
         </div>
         <div className="flex flex-col space-y-4 ">
-          {/* <TaskDisplay
-            handleOnDrag={handleOnDrag}
-            taskname={colType + "_task1"}
-          /> */}
-
-         
-
           {task &&
             task.map((taskname) => {
-              const inputObj =  inputs.find((item) => item.taskName === taskname) ;
+              const inputObj = inputs.find(
+                (item) => item.taskName === taskname
+              );
               const { name, heading, description, taskName } = inputObj || {};
-                 return (
-                  <TaskDisplay
+              return (
+                <TaskDisplay
                   key={taskName}
-                  name={name }
-                  heading={heading }
-                  description={description }
+                  name={name}
+                  heading={heading}
+                  description={description}
                   taskname={taskName}
+                  currCol={colType}
                 />
               );
             })}
-
         </div>
         <p className="text-gray-500 text-center mt-4 break-words w-full max-w-xs">
           {footerDescription}

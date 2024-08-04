@@ -20,7 +20,7 @@ const TaskContextProvider = ({ children }) => {
     }
   });
 
-  console.log(inputs, "inputs");
+
 
   const [tasks, setTasks] = useState(() => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -123,7 +123,7 @@ const TaskContextProvider = ({ children }) => {
     <>
       <TaskContext.Provider value={allValues}>
         {children}
-        </TaskContext.Provider>
+      </TaskContext.Provider>
     </>
   );
 };

@@ -1,20 +1,20 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import NewTask from "../Layout/NewTask";
-import Column from "../Layout/Column";
+
+import Column from"../Layout/Column/Column";
+
 import {
   faPencilAlt,
   faClock,
   faFlag,
   faTasks,
 } from "@fortawesome/free-solid-svg-icons";
-import { TaskContext } from "../state/TaskContext";
-
+import { TaskContext } from "../state/Tasks/TaskContext";
 
 const Page = () => {
   const [displayTask, setDisplayTask] = useState(false);
   const [colTask, setColTask] = useState("");
-  const { tasks} = useContext(TaskContext);
-
+  const { tasks } = useContext(TaskContext);
 
   const saveTasks = () => {
     try {
@@ -47,16 +47,13 @@ const Page = () => {
     localStorage.setItem("displayTask", newDisplayTask);
   };
 
-
   return (
     <>
-     
       <div className="pt-16 px-8  h-screen ">
         <div className="grid grid-cols-4 gap-8 min-w-max">
           {Object.keys(tasks).map((colType) => (
             <Column
-            
-             islast= { colType ==="OnHold" ? true : false}
+              islast={colType === "OnHold" ? true : false}
               key={colType}
               colType={colType}
               icon={
@@ -70,15 +67,13 @@ const Page = () => {
               }
               cardCount={tasks[colType].length}
               fun={toggle}
-            
-              
-              // inputObj={newTask && colType.toLowerCase() === newTask.colType ? newTask : null}
 
+              // inputObj={newTask && colType.toLowerCase() === newTask.colType ? newTask : null}
             />
           ))}
         </div>
       </div>
-      {displayTask && <NewTask fun={toggle} taskCol={colTask}  />}
+      {displayTask && <NewTask fun={toggle} taskCol={colTask} />}
     </>
   );
 };

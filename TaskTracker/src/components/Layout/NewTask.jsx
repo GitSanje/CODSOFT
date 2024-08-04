@@ -1,45 +1,32 @@
 import React, { useContext, useState } from "react";
-import TaskInput from "../_partials/TaskInput";
+import TaskInput from "../_partials/Input";
 import TaskTextArea from "../_partials/TaskTextArea";
 import { motion, AnimatePresence } from "framer-motion";
 import { stripWords } from "../util/stripWord";
-import { TaskContext } from "../state/TaskContext";
+import { TaskContext } from "../state/Tasks/TaskContext";
 
 import { v4 as uuidv4 } from "uuid";
 
-const NewTask = ({fun, taskCol}) => {
+const NewTask = ({ fun, taskCol }) => {
+  const { initialInput, handlecreateTask } = useContext(TaskContext);
 
-
-  //const colV = stripWords(taskCol);
-
-
-  const { initialInput, handlecreateTask} = useContext(TaskContext);  
-  
   const [input, setInput] = useState(initialInput);
-
-
 
   const handleInput = (e) => {
     const { name, value } = e.target;
 
-     setInput((prev) => {
-      return {...prev, id:uuidv4(),[name]:value, }
-     });
+    setInput((prev) => {
+      return { ...prev, id: uuidv4(), [name]: value };
+    });
   };
-  
 
-
-
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    
-    window.alert("task created")
-    
+
+    window.alert("task created");
+
     handlecreateTask(taskCol, input);
     setInput(initialInput);
-    
-    
-   
   };
 
   return (
@@ -56,65 +43,59 @@ const NewTask = ({fun, taskCol}) => {
             <button
               className="absolute -top-12 right-1 text-blue-600 hover:text-blue-400 focus:outline-none bg-white p-4 "
               aria-label="Close"
-              onClick={()=>fun()}
+              onClick={() => fun()}
             >
               <i className="fa-solid fa-xmark fa-lg"></i>
             </button>
-            <form onSubmit={ handleSubmit}>
-                <div className="main  p-4 mr-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <i className="fa-solid fa-pen-to-square fa-2xl"></i>
-                      <span className="text-black text-xl font-bold ml-2">
-                        New Task
-                      </span>
-                    </div>
-                    <div className="text-gray-400">
-                      <i
-                        className="fa-solid fa-ellipsis-h"
-                        style={{ transform: "rotate(90deg)" }}
-                      ></i>
-                    </div>
+            <form onSubmit={handleSubmit}>
+              <div className="main  p-4 mr-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <i className="fa-solid fa-pen-to-square fa-2xl"></i>
+                    <span className="text-black text-xl font-bold ml-2">
+                      New Task
+                    </span>
                   </div>
-
-          
-                    <div className=" pt-7">
-                      <TaskInput
-                        heading="who is requesting?"
-                        label="Insert your name"
-                        name="name"
-                        value={input.name}
-                        onChange={handleInput}
-                      />
-                    </div>
-
-                    <div className="pt-4">
-                      <TaskInput
-                        heading="What?"
-                        label="Briefly describe the task"
-                        name="heading"
-                        value={input.heading}
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="py-4">
-                      <TaskTextArea
-                        heading="More Info"
-                        label="Provide further detail about about the task (this field is optional)"
-                        name="description"
-                        onChange={handleInput}
-                        value={input.description}
-                      />
-                    </div>
-                
+                  <div className="text-gray-400">
+                    <i
+                      className="fa-solid fa-ellipsis-h"
+                      style={{ transform: "rotate(90deg)" }}
+                    ></i>
+                  </div>
                 </div>
 
+                <div className=" pt-7">
+                  <TaskInput
+                    heading="who is requesting?"
+                    label="Insert your name"
+                    name="name"
+                    value={input.name}
+                    onChange={handleInput}
+                  />
+                </div>
+
+                <div className="pt-4">
+                  <TaskInput
+                    heading="What?"
+                    label="Briefly describe the task"
+                    name="heading"
+                    value={input.heading}
+                    onChange={handleInput}
+                  />
+                </div>
+                <div className="py-4">
+                  <TaskTextArea
+                    heading="More Info"
+                    label="Provide further detail about about the task (this field is optional)"
+                    name="description"
+                    onChange={handleInput}
+                    value={input.description}
+                  />
+                </div>
+              </div>
+
               <div className="bg-blue-500 p-4 text-center">
-                <button
-                type="submit"
-                 className="text-white  font-semibold"
-                 >
-        
+                <button type="submit" className="text-white  font-semibold">
                   Create New Task{" "}
                   <span className="text-gray-400 text-md ">
                     {" "}
@@ -123,7 +104,6 @@ const NewTask = ({fun, taskCol}) => {
                 </button>
               </div>
             </form>
-            
           </div>
         </motion.div>
       </AnimatePresence>
