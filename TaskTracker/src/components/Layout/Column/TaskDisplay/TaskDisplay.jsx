@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
-import TaskUpdateCard from "../../TaskUpdateCard";
+
 import Model from "../../../Wrapper/Model";
 import TaskDisplayProvider from "./TaskDisplayProvider";
+import TaskUpdateCard from "../TaskUpdate/TaskUpdateCard";
+
 
 const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -52,7 +54,7 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
 
         <Model isVisible={isVisible} onClose={handleOnClose}>
           {currCol === "Backlog" ? (
-            <TaskUpdateCard name={name} heading={heading} dis={description} />
+            <TaskUpdateCard name={name} heading={heading} dis={description} currCol={currCol} />
           ) : (
             ""
           )}

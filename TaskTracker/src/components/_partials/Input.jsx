@@ -1,9 +1,9 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
-const Input = ({ classNameInput, classNameLabel, label, heading, ...props }) => {
+const Input = ({className, classNameInput, classNameLabel, label, heading, ...props }) => {
   return (
-    <div className="flex flex-col">
+    <div className={twMerge("flex flex-col", className)}>
       {heading && <h3 className="text-black text-base font-semibold">* {heading}</h3> }
       { label && <label htmlFor={label}  className= {twMerge("text-gray-800 text-sm pb-2", classNameLabel)}>{label}</label>}
       <input

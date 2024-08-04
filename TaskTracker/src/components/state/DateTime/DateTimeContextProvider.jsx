@@ -19,10 +19,16 @@ const DateTimeContextProvider = ({ children }) => {
     setIsOpen(!isOpen);
   };
 
-  const handleCancel = () => {
-    setShowPicker(false);
+  const handleCancel = (datetype, setDateTime) => {
+   console.log(datetype)
     setStartDate(null);
     setTime("");
+    setDateTime((prev) => {
+           const updatedDatetime = {...prev}
+           updatedDatetime[datetype] = ''
+           return updatedDatetime;
+  })
+  setShowPicker(false);
   };
 
   const toggle = () => {

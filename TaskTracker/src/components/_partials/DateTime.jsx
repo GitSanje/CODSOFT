@@ -7,6 +7,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import Button from "./Button";
 import Input from "./Input";
 import { DateTimeContext } from "../state/DateTime/DateTimeContextProvider";
+import { UpdateTaskContext } from "../state/Tasks/UpdateTaskProvider";
 
 const StyledDatePicker = styled(DatePicker)`
   width: 100%;
@@ -22,7 +23,7 @@ const StyledDatePicker = styled(DatePicker)`
   }
 `;
 
-const DateTime = ({ showTime = false , setDateTime}) => {
+const DateTime = ({ showTime = false , dateType}) => {
 
 
   const {
@@ -40,7 +41,7 @@ const DateTime = ({ showTime = false , setDateTime}) => {
   } = useContext(DateTimeContext);
 
 
-  
+  const {setDateTime} = useContext(UpdateTaskContext)
 
   return (
     <div className="relative">
@@ -49,6 +50,7 @@ const DateTime = ({ showTime = false , setDateTime}) => {
           classNameInput="border-2 border-solid border-blue-300 px-7 py-2 focus:border-blue-600"
           type="text"
           readOnly
+          required
           onClick={toggle}
           value={
             startDate
@@ -91,6 +93,7 @@ const DateTime = ({ showTime = false , setDateTime}) => {
               <Input
                 label={"Time"}
                 classNameLabel="text-base font-medium"
+                className="flex-row items-center space-x-2"
                 onChange={handleTimeChange}
                 id="time"
                 type="time"
@@ -102,7 +105,7 @@ const DateTime = ({ showTime = false , setDateTime}) => {
           <div className="flex justify-between">
             <Button onClick={ () => handleApply(showTime,setDateTime)}>Save</Button>
             <Button
-              onClick={handleCancel}
+              onClick={() => handleCancel(dateType, setDateTime)}
               className="bg-gray-500 hover:bg-gray-600"
             >
               Cancel
