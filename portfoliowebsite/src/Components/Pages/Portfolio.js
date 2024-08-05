@@ -4,28 +4,21 @@ import p1img from "../assets/img/p1.jpg";
 import Heading from "../partials/Heading";
 
 import { motion, AnimatePresence } from "framer-motion";
+import { projects } from "../data/constants";
 
 const Portfolio = () => {
 
   
   let Categories = [
     { name: "All", link: "/" },
-    { name: "Packeging", link: "/" },
-    { name: "Mockup", link: "/" },
-    { name: "Typography", link: "/" },
-    { name: "Photography", link: "/" },
+    { name: "Web App", link: "/" },
+    { name: "Machine Learning", link: "/" },
+    // { name: "Typography", link: "/" },
+    // { name: "Photography", link: "/" },
   ];
+  
 
-  const InitialData = [
-    { dis: "Square Box Mockup", category: "Mockup" },
-    { dis: "Product Box Package Mockup", category: "Mockup" },
-    { dis: "Creative Package Design", category: "Packeging" },
-    { dis: "Packaging Brand", category: "Packeging" },
-    { dis: "Isometric 3D Extrusion", category: "TYPOGRAPHY" },
-    { dis: "White Space Photography", category: "PHOTOGRAPHY" },
-  ];
-
-  const [data, setData] = useState(InitialData);
+  const [data, setData] = useState(projects);
   const [selectedCategory, setSelectedCategory] = useState('All')
 
 
@@ -33,13 +26,13 @@ const Portfolio = () => {
   {
     setSelectedCategory(categoryName);
     if( categoryName == "All"){
-     setData(InitialData);
+     setData(projects);
     }
     else
    {
  
     setData(
-      InitialData.filter(
+      projects.filter(
         (item) => item.category.toLowerCase() === categoryName.toLowerCase()
       )
     );
@@ -70,7 +63,7 @@ const Portfolio = () => {
               </li>
             ))}
           </ul>
-          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-8 md:mx-20 lg:mx-32 pt-12 ">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 md:mx-20 lg:mx-32 pt-12 " >
           <AnimatePresence>
             {data.map((item, index) => (
               <motion.div
@@ -88,7 +81,7 @@ const Portfolio = () => {
                   }}
                  
                >
-              <DisplayBox  img={p1img} dis={item.dis} category={item.category} />
+              <DisplayBox  data={item} />
               </motion.div>
             ))}
 

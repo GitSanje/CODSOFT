@@ -28,14 +28,13 @@ const About = () => {
 
             <div className="text-xl text-gray-500 flex flex-col space-y-7 pt-5">
               <p>
-                Separated they live in Bookmarksgrove right at the coast of the
-                Semantics, a large language ocean.
+              I am a motivated and versatile individual, always eager to take on new challenges. With a passion for learning I am dedicated to delivering high-quality results. With a positive attitude and a growth mindset, I am ready to make a meaningful contribution and achieve great things.
               </p>
-              <p className=" text-base text-gray-500  ">
+              {/* <p className=" text-base text-gray-500  ">
                 A small river named Duden flows by their place and supplies it
                 with the necessary regelialia. It is a paradisematic country, in
                 which roasted parts of sentences fly into your mouth.
-              </p>
+              </p> */}
               <p className="flex space-x-4">
               <HashLink
               to="#contact"
@@ -49,8 +48,9 @@ const About = () => {
                 </HashLink>
                 <Button
                   content="Download CV"
-                  link="#"
+                  link="https://drive.google.com/file/d/1HXwOSKxzbDfB0fSUTQ0wavcAkz5-_CUX/view?usp=sharing"
                   className="bg-gray-500 hover:bg-gray-600"
+                  target="_blank"
                 />
               </p>
             </div>
@@ -58,9 +58,9 @@ const About = () => {
         </div>
       </div>
       <div className="div">
-      <ClientTestimonial/>
+      {/* <ClientTestimonial/>
       <MyServices/>
-      <Blog/>
+      <Blog/> */}
 
       </div>
     

@@ -1,17 +1,35 @@
 import React from "react";
 
-const DisplayBox = ({ img, dis, category }) => {
+const DisplayBox = ({ data }) => {
+  console.log(data.tags)
   return (
-    <div className="container mx-auto flex justify-center items-center pb-12">
-      <div className="">
+    <div className="container mx-auto flex justify-center items-center pb-12 md:h-full  transform duration-300 hover:-translate-y-2 hover:shadow-lg " style={{ background: "#333333",}}>
+      
+      <div className= "relative ">
+      <a href={data.github} 
+        target="_blank">
         <img
-          src={img}
-          alt={category}
-          className="w-full h-auto md:max-w-md xl:max-w-lg  xl:w-96 xl:h-96 pb-5"
+          src={data.image}
+          alt={data.category}
+          className="w-full h-auto md:max-w-md xl:max-w-lg  object-cover pb-2 rounded-md"
+          
         />
-        <div className="flex flex-col justify-center items-center text-white font-light space-y-4">
-          <p className="text-xl">{dis}</p>
-          <p className="text-xs text-gray-400 uppercase">{category}</p>
+        </a>
+        
+        <div className="pt-4 ml-4">
+          <ul className="flex flex-row gap-2 items-center justify-start flex-wrap ">
+           {data.tags && (
+            data.tags.map((tag, index) => (
+              <li key={index} className="px-2 text-sm  text-lime-500  bg-gray-700 rounded-md">{tag}</li>
+            ))
+           )} 
+           
+          </ul>
+        </div>
+        
+        <div className="flex flex-col justify-start  text-white font-light space-y-4 pt-4 ml-4">
+          <p className="text-xl font-semibold">{data.title}</p>
+          <p className="text-sm text-gray-400 font-medium ">{data.description}</p>
         </div>
       </div>
     </div>

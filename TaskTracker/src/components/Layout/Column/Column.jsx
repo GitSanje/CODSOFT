@@ -3,6 +3,7 @@ import TaskDisplay from "./TaskDisplay/TaskDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getFooterVal } from "../../util/getColorAndFooter";
 import { TaskContext } from "../../state/Tasks/TaskContext";
+import TaskDisplayProvider from "./TaskDisplay/TaskDisplayCombineProvider";
 
 const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
   const { handleOnDrop, tasks, inputs } = useContext(TaskContext);
@@ -52,6 +53,7 @@ const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
           </div>
         </div>
         <div className="flex flex-col space-y-4 ">
+          
           {task &&
             task.map((taskname) => {
               const inputObj = inputs.find(
@@ -59,14 +61,17 @@ const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
               );
               const { name, heading, description, taskName } = inputObj || {};
               return (
-                <TaskDisplay
-                  key={taskName}
-                  name={name}
-                  heading={heading}
-                  description={description}
-                  taskname={taskName}
-                  currCol={colType}
-                />
+                <TaskDisplayProvider>
+                  <TaskDisplay
+                    key={taskName}
+                    name={name}
+                    heading={heading}
+                    description={description}
+                    taskname={taskName}
+                    currCol={colType}
+                  />
+                
+                </TaskDisplayProvider>
               );
             })}
         </div>

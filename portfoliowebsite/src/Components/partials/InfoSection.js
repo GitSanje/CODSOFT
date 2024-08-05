@@ -3,7 +3,8 @@ import InfoCard from './InfoCard';
 
 const InfoSection = ({  data }) => {
     return (
-      <div className="col-span-1 space-y-4">
+      <div className=" space-y-4"> 
+      {/* col-span-1 */}
         <h2 className="text-2xl text-white capitalize mb-8">{data[0].type}</h2>
         <div className="space-y-4">
           {data.map((d, index) => (

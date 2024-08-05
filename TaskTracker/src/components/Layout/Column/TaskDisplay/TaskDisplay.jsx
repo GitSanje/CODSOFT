@@ -1,12 +1,31 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Model from "../../../Wrapper/Model";
-import TaskDisplayProvider from "./TaskDisplayProvider";
+import TaskDisplayProvider from "./TaskDisplayCombineProvider";
 import TaskUpdateCard from "../TaskUpdate/TaskUpdateCard";
+import { UpdateTaskContext } from "../../../state/Tasks/UpdateTaskProvider";
+import PriorityLevel from "../TaskUpdate/PriorityLevel";
+
 
 
 const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
-  const [isVisible, setIsVisible] = useState(false);
+ 
+  // use uniquekey for all the tasks, since same key allows to share the 
+  // property across all components;
+
+
+  //
+  const uniqueKey = `isVisible-${taskname}`;
+ 
+  const {phaseUpdated, isVisible,setIsVisible} = useContext(UpdateTaskContext)
+
+  useEffect(() => {
+    const visible = localStorage.getItem(uniqueKey) === "true";
+    setIsVisible(visible);
+    
+  }, [uniqueKey]);
+
+  console.log(isVisible)
 
   const handleDragEnd = (e) => {
     e.target.style.visibility = "visible";
@@ -20,15 +39,20 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
   };
 
   const handleOnClick = () => {
+
     setIsVisible(true);
+    localStorage.setItem(uniqueKey, true);
   };
   const handleOnClose = () => {
     setIsVisible(false);
+    localStorage.setItem(uniqueKey, false);
   };
+
+
 
   return (
     <>
-      <TaskDisplayProvider>
+   
         <div
           className="bg-white rounded-md border-2 shadow-sm hover:shadow-md cursor-pointer p-5  transition duration-300 ease-in-out"
           draggable
@@ -38,7 +62,9 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
           onDragEnd={handleDragEnd}
           onClick={handleOnClick}
         >
+
           <div className="flex flex-col space-y-2">
+             <PriorityLevel hoveredItem={phaseUpdated.clickItem ={}}/>
             <div className="text-black text-start text-md font-semibold ">
               {heading || "Develop New E-reader"}
             </div>
@@ -54,12 +80,12 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
 
         <Model isVisible={isVisible} onClose={handleOnClose}>
           {currCol === "Backlog" ? (
-            <TaskUpdateCard name={name} heading={heading} dis={description} currCol={currCol} />
+            <TaskUpdateCard name={name} heading={heading} dis={description} currCol={currCol} taskname={taskname}/>
           ) : (
             ""
           )}
         </Model>
-      </TaskDisplayProvider>
+     
     </>
   );
 };

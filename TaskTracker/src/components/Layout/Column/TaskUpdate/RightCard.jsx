@@ -13,11 +13,10 @@ import { UpdateTaskContext } from "../../../state/Tasks/UpdateTaskProvider";
 import PriorityLevel from './PriorityLevel';
 import DateTimeContent from './DateTimeContent';
 
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-const RightCard = ({colType}) => {
+const RightCard = ({colType,taskName}) => {
 
     const {
         hoveredItem,
@@ -27,7 +26,10 @@ const RightCard = ({colType}) => {
         toggleDropdown,
         clickItem,
         dropdown,
-        dateTime
+        dateTime,
+        handleSubmit,
+        phaseUpdated,
+        errors
         
       } = useContext(UpdateTaskContext);
 
@@ -36,36 +38,9 @@ const RightCard = ({colType}) => {
         { label: "Low", color: "bg-green-600" },
         { label: "Medium", color: "bg-blue-600" },
       ];
-      const [phaseUpdated,setPhaseUpdated] = useState({});
-      const [errors, setErrors] = useState({});
-
-      const validateFields = () => {
-            let tempErrors = {};
-
-                if (!clickItem) tempErrors.priority = "Priority is required.";
-                if (!dateTime.startDate) tempErrors.startDate = "Start date is required.";
-                if (!dateTime.endDateTime) tempErrors.endDate = "End date is required.";
-                if (dateTime.startDate && dateTime.endDateTime && dateTime.startDate >= dateTime.endDateTime) {
-                  tempErrors.endDate = "End date should be greater than start date.";
-                }
-                setErrors(tempErrors);
-
-                return Object.keys(tempErrors).length === 0;
-      }
-
-     const  handleSubmit = (e) => {
-        e.preventDefault()
-        if (validateFields()) {
-            setPhaseUpdated({
-              clickItem: clickItem,
-              dateTime: dateTime
-            });
-            toast.success("Form submitted successfully");
-          } else {
-            toast.error("Form has errors");
-          }
-     }
-     console.log(phaseUpdated,'phaseUpdated')
+     
+     
+     console.log(phaseUpdated,'phaseUpdated',dateTime)
 
   return (
     <>
@@ -87,7 +62,7 @@ const RightCard = ({colType}) => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={()=>handleSubmit(taskName)}>
 
       
         <div className="">

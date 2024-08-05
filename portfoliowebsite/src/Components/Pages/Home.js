@@ -12,7 +12,7 @@ const Home = () => {
         
       >
         <div className="  flex justify-center  ">
-          <img src={bgImage} className="" 
+          <img src={bgImage} className="rounded-full" 
           alt="Background"  
           
           />
