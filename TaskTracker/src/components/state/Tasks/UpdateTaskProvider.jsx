@@ -1,4 +1,4 @@
-import React, { createContext, useState} from 'react'
+import React, { createContext, useEffect, useState} from 'react'
 
 import { toast } from 'react-toastify';
 
@@ -11,16 +11,21 @@ const UpdateTaskProvider = ({children}) => {
   
 
   // UpdateTask
+  const initialPhaseUpdated = JSON.parse(localStorage.getItem("phaseUpdated")) || {
+    taskName: "",
+    clickItem: "",
+    dateTime: ""
+  };
+    const [phaseUpdated,setPhaseUpdated] = useState(initialPhaseUpdated);
     const [hoveredItem, setHoveredItesm] = useState(null);
     const [dropdown, setDropdown] = useState(false);
     const [clickItem, setClickItem] = useState(null);
     const [dateTime, setDateTime] = useState({
-    
       startDate: "",
       endDateTime: "",
     });
 
-    const [phaseUpdated,setPhaseUpdated] = useState({});
+   
     const [errors, setErrors] = useState({});
     // visible of update task
     const [isVisible, setIsVisible] = useState(false);
@@ -41,6 +46,13 @@ const UpdateTaskProvider = ({children}) => {
         setDropdown(!dropdown);
       };
 
+      useEffect(() => {
+        if (phaseUpdated.taskName) {
+          localStorage.setItem("phaseUpdated", JSON.stringify(phaseUpdated));
+        }
+       
+       
+      }, [phaseUpdated])
 
       
       const validateFields = () => {
@@ -57,29 +69,41 @@ const UpdateTaskProvider = ({children}) => {
                 return Object.keys(tempErrors).length === 0;
       }
 
-      const handleSubmit = (taskName) => (e) => {
-        const uniqueKey = `isVisible-${taskName}`;
-        console.log(uniqueKey, 'updateTaskProvide');
-        
+      const handleSubmit = async (taskName, e) => {
+     
         e.preventDefault();
+        const uniqueKey = `isVisible-${taskName}`;
+        
         
         if (validateFields()) {
-          setPhaseUpdated({
-            taskName: taskName,
-            clickItem: clickItem,
-            dateTime: dateTime
-          });
-          toast.success("Form submitted successfully");
+           
+          await setPhaseUpdated({
+              taskName: taskName,
+              clickItem: clickItem,
+              dateTime: dateTime
+            });
+           
+
+            
+           toast.success("Form submitted successfully");
+          
+          
+          setTimeout(() => {
           
           // Update the state for visibility
-          setIsVisible( false);
+            setIsVisible(false);
+      
+            // Update the localStorage
+            localStorage.setItem(uniqueKey, JSON.stringify(false));
+          }, 5000);
           
-          // Update the localStorage
-          localStorage.setItem(uniqueKey, false);
+        
+         
         } else {
           toast.error("Form has errors");
         }
       };
+      
       
 
      // 

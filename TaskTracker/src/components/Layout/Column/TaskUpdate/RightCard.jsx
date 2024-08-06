@@ -40,7 +40,7 @@ const RightCard = ({colType,taskName}) => {
       ];
      
      
-     console.log(phaseUpdated,'phaseUpdated',dateTime)
+     console.log(phaseUpdated,'phaseUpdated',)
 
   return (
     <>
@@ -62,7 +62,7 @@ const RightCard = ({colType,taskName}) => {
           </p>
         </div>
 
-        <form onSubmit={()=>handleSubmit(taskName)}>
+        <form onSubmit={(e) => handleSubmit(taskName,e)}>
 
       
         <div className="">

@@ -58,7 +58,7 @@ const DateTimeContextProvider = ({ children }) => {
 
   const handleApply = (showTime,setDateTime) => {
     let updatedDate = new Date(startDate);
-    if (showTime) {
+    if (showTime && time) {
       const [hours, minutes] = time.split(":");
       updatedDate.setHours(hours);
       updatedDate.setMinutes(minutes);
