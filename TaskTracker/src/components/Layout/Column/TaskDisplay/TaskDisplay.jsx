@@ -47,10 +47,16 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
     setIsVisible(false);
     localStorage.setItem(uniqueKey, false);
   };
-  const endDate = new Date( phaseUpdated.dateTime.endDateTime);
-  const dateDiff = getDifferenceInDate(phaseUpdated.dateTime.startDate, endDate)
-  const monthDate = endDate.toLocaleString('default', { month: 'short' });
-  const date = endDate.getDate();
+  const Data = phaseUpdated[taskname];
+  console.log(phaseUpdated,taskname)  
+  if( Data && phaseUpdated.length > 0){
+    
+    let endDate = new Date( Data.dateTime.endDateTime );
+    let dateDiff = getDifferenceInDate(Data.dateTime.startDate, endDate)
+    let monthDate = endDate.toLocaleString('default', { month: 'short' });
+    let date = endDate.getDate();
+  }
+ 
 
   return (
     <>

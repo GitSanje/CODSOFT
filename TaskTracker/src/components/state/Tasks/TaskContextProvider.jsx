@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useCallback } from "react";
 import { TaskContext } from "./TaskContext";
 
 const TaskContextProvider = ({ children }) => {
@@ -40,6 +40,7 @@ const TaskContextProvider = ({ children }) => {
     };
   });
 
+
   const saveTasks = () => {
     try {
       localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -78,31 +79,36 @@ const TaskContextProvider = ({ children }) => {
     }
   };
 
-  const removeTaskFromOtherColumns = (task, colName) => {
-    setTasks((prevTasks) => {
-      const updatedTasks = { ...prevTasks };
-      Object.keys(updatedTasks).forEach((key) => {
-        if (key !== colName) {
-          updatedTasks[key] = updatedTasks[key].filter((t) => t !== task);
-        }
-      });
-
-      return updatedTasks;
-    });
-  };
+  // const removeTaskFromOtherColumns = useCallback((task, colName) => {
+  //   setTasks((prevTasks) => {
+  //     const updatedTasks = { ...prevTasks };
+  //     Object.keys(updatedTasks).forEach((key) => {
+  //       if (key !== colName) {
+  //         updatedTasks[key] = updatedTasks[key].filter((t) => t !== task);
+  //       }
+  //     });
+  //     return updatedTasks;
+  //   });
+  // }, []);
 
   const handleOnDrop = (colName) => (e) => {
     const task = e.dataTransfer.getData("text");
-    console.log(task, colName);
+   
 
     if (task) {
       setTasks((prevTasks) => {
         const updatedTasks = { ...prevTasks };
-        updatedTasks[colName] = [
-          ...updatedTasks[colName].filter((t) => t !== task),
-          task,
-        ];
-        removeTaskFromOtherColumns(task, colName);
+        // updatedTasks[colName] = [
+        //   ...updatedTasks[colName].filter((t) => t !== task),
+        //   task,
+        // ];
+        Object.keys(updatedTasks).forEach((key) => {
+          if (key !== colName) {
+            updatedTasks[key] = updatedTasks[key].filter((t) => t !== task);
+          }
+        });
+        updatedTasks[colName] = [...updatedTasks[colName].filter((t) => t !== task), task];
+        // removeTaskFromOtherColumns(task, colName);
         return updatedTasks;
       });
     }
