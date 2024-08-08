@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
@@ -14,6 +14,7 @@ import PriorityLevel from './PriorityLevel';
 import DateTimeContent from './DateTimeContent';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { getTaskDetails } from '../../../util/getDifferencDate';
 
 
 const RightCard = ({colType,taskName}) => {
@@ -25,6 +26,7 @@ const RightCard = ({colType,taskName}) => {
         handleDropdown,
         toggleDropdown,
         clickItem,
+        setClickItem,
         dropdown,
         dateTime,
         handleSubmit,
@@ -39,8 +41,13 @@ const RightCard = ({colType,taskName}) => {
         { label: "Medium", color: "bg-blue-600" },
       ];
      
-     
-     console.log(phaseUpdated,'phaseUpdated',)
+      const { taskInfo } = getTaskDetails(taskName,phaseUpdated)
+     useEffect(() => {
+      if(taskInfo){
+        setClickItem(taskInfo.clickItem)
+      }
+     },[])
+ 
 
   return (
     <>
@@ -105,8 +112,8 @@ const RightCard = ({colType,taskName}) => {
         </div>   
 
       
-       <DateTimeContent title={"Start Date"} dis={"Insert the exact date this task will began"} showTime={false} error={errors.startDate} dateType = "startDate"/>
-       <DateTimeContent title={"End Date"} dis={"Insert the expected date to finish the task"} showTime={true} error={errors.endDate} dateType = "endDateTime" />
+       <DateTimeContent title={"Start Date"} dis={"Insert the exact date this task will began"} showTime={false} error={errors.startDate} dateType = "startDate" taskName={taskName}/>
+       <DateTimeContent title={"End Date"} dis={"Insert the expected date to finish the task"} showTime={true} error={errors.endDate} dateType = "endDateTime" taskName={taskName}/>
         
         <div className="flex items-center justify-center">
             <Button className="mt-4 px-7 w-full font-medium ">Save</Button>

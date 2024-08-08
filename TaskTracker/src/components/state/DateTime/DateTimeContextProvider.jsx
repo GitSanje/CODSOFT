@@ -58,11 +58,13 @@ const DateTimeContextProvider = ({ children }) => {
 
   const handleApply = (showTime,setDateTime) => {
     let updatedDate = new Date(startDate);
+    
     if (showTime && time) {
       const [hours, minutes] = time.split(":");
       updatedDate.setHours(hours);
       updatedDate.setMinutes(minutes);
     }
+    
 
     setDateTime((prev) => ({
       ...prev,
@@ -83,6 +85,8 @@ const DateTimeContextProvider = ({ children }) => {
     showPicker,
     isOpen,
     time,
+    setTime,
+    setStartDate
     
   };
 

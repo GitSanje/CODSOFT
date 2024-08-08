@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,6 +8,7 @@ import Button from "./Button";
 import Input from "./Input";
 import { DateTimeContext } from "../state/DateTime/DateTimeContextProvider";
 import { UpdateTaskContext } from "../state/Tasks/UpdateTaskProvider";
+import { getTaskDetails } from "../util/getDifferencDate";
 
 const StyledDatePicker = styled(DatePicker)`
   width: 100%;
@@ -23,9 +24,7 @@ const StyledDatePicker = styled(DatePicker)`
   }
 `;
 
-const DateTime = ({ showTime = false , dateType}) => {
-
-
+const DateTime = ({ showTime = false, dateType, taskName }) => {
   const {
     handleIconClick,
     handleCancel,
@@ -35,14 +34,47 @@ const DateTime = ({ showTime = false , dateType}) => {
     handleApply,
     startDate,
     showPicker,
-   
+    setStartDate,
+    setTime,
     time,
- 
   } = useContext(DateTimeContext);
 
+  const { setDateTime, phaseUpdated } = useContext(UpdateTaskContext);
+  const { taskInfo } = getTaskDetails(taskName, phaseUpdated);
 
-  const {setDateTime} = useContext(UpdateTaskContext)
+  useEffect(() => {
+    if (taskInfo) {
+      const dateToSet =
+        dateType === "startDate"
+          ? taskInfo.dateTime.startDate
+          : taskInfo.dateTime.endDateTime;
 
+      if (dateToSet) {
+        const dateObject = new Date(dateToSet);
+        setStartDate(dateObject);
+        if (dateType === "endDateTime") {
+          const hours = dateObject.getHours();
+          const minutes = dateObject.getMinutes();
+
+          const timeString = `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}`;
+          setTime(timeString);
+        }
+
+        setDateTime((prev) => ({
+          ...prev,
+          ...(dateType === "startDate"
+            ? { startDate: dateToSet }
+            : { endDateTime: dateToSet }),
+        }));
+      } else {
+        console.error(`Null value found for ${dateType}`);
+      }
+    }
+  }, [taskInfo, dateType, setStartDate]);
+
+  //console.log(startDate,dateType)
   return (
     <div className="relative">
       <div className="flex flex-row items-center">
@@ -82,7 +114,7 @@ const DateTime = ({ showTime = false , dateType}) => {
               // open={isOpen}
               // ref={datePickerRef}
             />
-              {/* <FaCalendarAlt
+            {/* <FaCalendarAlt
                 className="absolute right-8  text-gray-400 "
                 onClick={handleIconClick}
               /> */}
@@ -103,7 +135,9 @@ const DateTime = ({ showTime = false , dateType}) => {
           )}
 
           <div className="flex justify-between">
-            <Button onClick={ () => handleApply(showTime,setDateTime)}>Save</Button>
+            <Button onClick={() => handleApply(showTime, setDateTime)}>
+              Save
+            </Button>
             <Button
               onClick={() => handleCancel(dateType, setDateTime)}
               className="bg-gray-500 hover:bg-gray-600"

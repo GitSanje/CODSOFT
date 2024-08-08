@@ -4,7 +4,7 @@ import DateTime from '../../../_partials/DateTime'
 import { UpdateTaskContext } from '../../../state/Tasks/UpdateTaskProvider'
 
 
-const DateTimeContent = ({title, dis, showTime, error, dateType}) => {
+const DateTimeContent = ({title, dis, showTime, error, dateType, taskName}) => {
 
 const { setDateTime } = useContext(UpdateTaskContext);
   return (
@@ -15,7 +15,7 @@ const { setDateTime } = useContext(UpdateTaskContext);
       {dis}
     </p>
     <DateTimeContextProvider>
-      <DateTime showTime={showTime}  dateType={dateType} />
+      <DateTime showTime={showTime}  dateType={dateType} taskName = {taskName}/>
       {error && (
                 <p className="text-red-500 text-sm">{error}</p>
               )}

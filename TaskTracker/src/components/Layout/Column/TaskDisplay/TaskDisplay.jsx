@@ -6,7 +6,7 @@ import TaskUpdateCard from "../TaskUpdate/TaskUpdateCard";
 import { UpdateTaskContext } from "../../../state/Tasks/UpdateTaskProvider";
 import PriorityLevel from "../TaskUpdate/PriorityLevel";
 import { ToastContainer } from "react-toastify";
-import { getDifferenceInDate } from "../../../util/getDifferencDate";
+import { getDifferenceInDate,getTaskDetails } from "../../../util/getDifferencDate";
 
 const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
  
@@ -47,15 +47,11 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
     setIsVisible(false);
     localStorage.setItem(uniqueKey, false);
   };
-  const Data = phaseUpdated[taskname];
-  console.log(phaseUpdated,taskname)  
-  if( Data && phaseUpdated.length > 0){
-    
-    let endDate = new Date( Data.dateTime.endDateTime );
-    let dateDiff = getDifferenceInDate(Data.dateTime.startDate, endDate)
-    let monthDate = endDate.toLocaleString('default', { month: 'short' });
-    let date = endDate.getDate();
-  }
+ 
+
+  const { taskInfo, dateDiff, monthDate, date } = getTaskDetails(taskname,phaseUpdated)
+  
+  
  
 
   return (
@@ -72,7 +68,7 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
         >
 
           <div className="flex flex-col space-y-2">
-            {phaseUpdated && phaseUpdated.taskName ===taskname ? <PriorityLevel hoveredItem={phaseUpdated.clickItem} 
+            {taskInfo && taskInfo.taskName ===taskname ? <PriorityLevel hoveredItem={taskInfo.clickItem} 
              label={false} className={false}/> : ""}
 
             <div className="text-black text-start text-md font-semibold ">
@@ -86,7 +82,7 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
                 " Re-design our current logo to a new updated version "}
             </p>
           </div>
-          {phaseUpdated && phaseUpdated.taskName ===taskname ? 
+          {taskInfo && taskInfo.taskName ===taskname ? 
              <div className="font-medium flex flex-row space-x-3 mt-4 items-center">
               <h2 className="px-3 py-1 bg-gray-400 text-white rounded">{monthDate}, {date}</h2>
           <p className="text-gray-500"> in {dateDiff} </p> 

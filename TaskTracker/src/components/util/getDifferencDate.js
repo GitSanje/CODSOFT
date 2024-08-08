@@ -25,16 +25,20 @@ export const getDifferenceInDate = (startDate, endDate) => {
     if (end.getDate() < start.getDate()) {
       months--;
     }
-    
+
+    years = Math.abs(years)
+    months = Math.abs(months)
+    const days = Math.abs(end.getDate() - start.getDate());
+    const hours = Math.abs(end.getHours() - start.getHours());
     // If the year difference is less than 1
-    if (years < 1) {
+    if ( years< 1) {
       // If the month difference is less than 1
       if (months < 1) {
         // Calculate days difference
-        const days = end.getDate() - start.getDate();
+       
         if (days < 1) {
           // Calculate hours difference
-          const hours = end.getHours() - start.getHours();
+          
           return hours > 0 ? `${hours} hours` : "Less than an hour";
         }
         return `${days} days`;
@@ -46,4 +50,20 @@ export const getDifferenceInDate = (startDate, endDate) => {
     return `${years} years ${months} months`;
   };
   
-
+export function getTaskDetails(taskname, phaseUpdated) {
+    const taskInfo = phaseUpdated.find((task) => task.taskName === taskname);
+    
+    if (!taskInfo) {
+      return { taskInfo: null, dateDiff: null, monthDate: "", date: "" };
+    }
+  
+    let endDate = taskInfo.dateTime.endDateTime ? new Date(taskInfo.dateTime.endDateTime) : null;
+    let dateDiff = getDifferenceInDate(taskInfo.dateTime.startDate, endDate);
+    let monthDate = endDate ? endDate.toLocaleString('default', { month: 'short' }) : "";
+    let date = endDate ? endDate.getDate() : "";
+  
+    return { taskInfo, dateDiff, monthDate, date };
+  }
+  
+  
+  

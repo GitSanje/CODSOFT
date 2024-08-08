@@ -4,11 +4,10 @@ import { toast } from "react-toastify";
 
 export const UpdateTaskContext = createContext("");
 
-
-
 const UpdateTaskProvider = ({ children }) => {
   // UpdateTask
-  const initialPhaseUpdated = JSON.parse(localStorage.getItem("phaseUpdated")) || [];
+  const initialPhaseUpdated =
+    JSON.parse(localStorage.getItem("phaseUpdated")) || [];
   const [phaseUpdated, setPhaseUpdated] = useState(initialPhaseUpdated);
 
   const [hoveredItem, setHoveredItesm] = useState(null);
@@ -38,16 +37,11 @@ const UpdateTaskProvider = ({ children }) => {
     setDropdown(!dropdown);
   };
 
-  useEffect(() => {
-    //Object.keys(phaseUpdated[0]).length
-    if (phaseUpdated.length  >0) {
-      localStorage.setItem("phaseUpdated", JSON.stringify(phaseUpdated));
-    }
-  }, [phaseUpdated]);
+ 
 
   const validateFields = () => {
     let tempErrors = {};
-
+    console.log(dateTime)
     if (!clickItem) tempErrors.priority = "Priority is required.";
     if (!dateTime.startDate) tempErrors.startDate = "Start date is required.";
     if (!dateTime.endDateTime) tempErrors.endDate = "End date is required.";
@@ -70,28 +64,26 @@ const UpdateTaskProvider = ({ children }) => {
     if (validateFields()) {
       setPhaseUpdated((prev) => {
         // Find if taskName already exists in the array
-        const existingTaskIndex = prev.findIndex( (task) => Object.keys(task)[0] === taskName);
+        const existingTaskIndex = prev.findIndex(
+          (task) => task.taskName === taskName
+        );
+        console.log(existingTaskIndex);
         if (existingTaskIndex >= 0) {
           // Update existing task
           return prev.map((task, index) =>
             index === existingTaskIndex
-              ? { [taskName]: { clickItem: clickItem, dateTime: dateTime } }
+              ? { taskName: taskName, clickItem: clickItem, dateTime: dateTime }
               : task
           );
-        }
-
-        else{
+        } else {
           return [
             ...prev,
             {
-              [taskName]: {
-                clickItem: clickItem,
-                dateTime: dateTime,
-              },
+              taskName: taskName,
+              clickItem: clickItem,
+              dateTime: dateTime,
             },
           ];
-        
-
         }
       });
 
@@ -109,6 +101,13 @@ const UpdateTaskProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    //Object.keys(phaseUpdated[0]).length
+    if (phaseUpdated.length > 0) {
+      localStorage.setItem("phaseUpdated", JSON.stringify(phaseUpdated));
+    }
+  }, [phaseUpdated]);
+
   //
 
   const values = {
@@ -118,6 +117,7 @@ const UpdateTaskProvider = ({ children }) => {
     handleDropdown,
     toggleDropdown,
     clickItem,
+    setClickItem,
     dropdown,
     dateTime,
     setDateTime,
