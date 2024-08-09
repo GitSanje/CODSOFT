@@ -6,7 +6,6 @@ import { UpdateTaskContext } from '../../../state/Tasks/UpdateTaskProvider'
 
 const DateTimeContent = ({title, dis, showTime, error, dateType, taskName}) => {
 
-const { setDateTime } = useContext(UpdateTaskContext);
   return (
     <> 
     

@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getColor, getFooterVal } from "../../util/getColorAndFooter";
 import { TaskContext } from "../../state/Tasks/TaskContext";
 import TaskDisplayProvider from "./TaskDisplay/TaskDisplayCombineProvider";
+import { ToastContainer } from "react-toastify";
+
 
 const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
   const { handleOnDrop, tasks, inputs } = useContext(TaskContext);
@@ -70,10 +72,11 @@ const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
                     taskname={taskName}
                     currCol={colType}
                   />
-                
+               
                 </TaskDisplayProvider>
               );
             })}
+            
         </div>
         <p className="text-gray-500 text-center mt-4 break-words w-full max-w-xs">
           {footerDescription}
@@ -85,7 +88,10 @@ const Column = ({ islast = false, colType, icon, cardCount, fun }) => {
             style={{ width: "1px" }}
           ></div>
         )}
+       
       </div>
+
+    
     </>
   );
 };

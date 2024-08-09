@@ -6,7 +6,7 @@ import TaskUpdateCard from "../TaskUpdate/TaskUpdateCard";
 import { UpdateTaskContext } from "../../../state/Tasks/UpdateTaskProvider";
 import PriorityLevel from "../TaskUpdate/PriorityLevel";
 import { ToastContainer } from "react-toastify";
-import { getDifferenceInDate,getTaskDetails } from "../../../util/getDifferencDate";
+import { getTaskDetails } from "../../../util/getDifferencDate";
 
 const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
  
@@ -29,6 +29,7 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
 
   const handleDragEnd = (e) => {
     e.target.style.visibility = "visible";
+
   };
   const handleOnDrag = (e, name) => {
     e.dataTransfer.setData("text", name);
@@ -88,15 +89,20 @@ const TaskDisplay = ({ name, heading, description, taskname, currCol }) => {
           <p className="text-gray-500"> in {dateDiff} </p> 
           </div>
           : ""}
+
+          
+
         </div>
 
-        <Model isVisible={isVisible} onClose={handleOnClose}>
+        
           {currCol === "Backlog" ? (
+            <Model isVisible={isVisible} onClose={handleOnClose}>
             <TaskUpdateCard name={name} heading={heading} dis={description} currCol={currCol} taskname={taskname}/>
+            </Model>
           ) : (
             ""
           )}
-        </Model>
+    
        
         
     </>

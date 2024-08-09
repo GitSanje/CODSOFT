@@ -10,6 +10,7 @@ import {
   faTasks,
 } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../state/Tasks/TaskContext";
+import { ToastContainer } from "react-toastify";
 
 const Page = () => {
   const [displayTask, setDisplayTask] = useState(false);
@@ -71,7 +72,9 @@ const Page = () => {
               // inputObj={newTask && colType.toLowerCase() === newTask.colType ? newTask : null}
             />
           ))}
+            
         </div>
+
       </div>
       {displayTask && <NewTask fun={toggle} taskCol={colTask} />}
     </>

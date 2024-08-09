@@ -1,5 +1,7 @@
 import { useState, useEffect,useCallback } from "react";
 import { TaskContext } from "./TaskContext";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const TaskContextProvider = ({ children }) => {
 
@@ -111,6 +113,7 @@ const TaskContextProvider = ({ children }) => {
         // removeTaskFromOtherColumns(task, colName);
         return updatedTasks;
       });
+          toast.success(`Task "${task}" moved to ${colName}`);
     }
   };
 
