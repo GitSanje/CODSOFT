@@ -7,7 +7,7 @@ const Button = ({children, className,...props}) => {
   return (
     <>
       <button 
-      className={twMerge('w-full bg-indigo-500 text-white py-2 rounded-lg',className)}
+      className={twMerge(' bg-indigo-500 text-white py-2 rounded-lg hover:bg-indigo-700',className)}
    
       {...props}
       
