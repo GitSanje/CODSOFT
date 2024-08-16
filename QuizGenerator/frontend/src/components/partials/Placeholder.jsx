@@ -4,7 +4,7 @@ import emptybox from "../../assets/empty_box.png"
 const Placeholder = () => {
   return (
     <>
-    <div className="flex-col gap-3 p-4 flex justify-center items-center">
+    <div className="flex-col gap-3 p-4 flex justify-center items-center pb-20">
     {/* https://www.svgrepo.com/svg/489659/empty-box?edit=true */}
         <img src={emptybox} alt="" />
 

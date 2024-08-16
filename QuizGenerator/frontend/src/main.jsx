@@ -7,19 +7,58 @@ import {
   createBrowserRouter,
   RouterProvider,
   BrowserRouter,
+  createRoutesFromElements,
+  Route,
 } from "react-router-dom";
 import LoginSignup from "./components/users/LoginSignup.jsx";
 import ErrorPage from "./error-page.jsx";
+import Root, { loader as rootLoader } from "./routes/root";
+import Contact from "./routes/contact.jsx";
+import Layout from "./Layout.jsx";
+import Home from "./components/pages/Home.jsx";
+import { ContextProvider } from "./context/GlobalContext";
+import QuizzCard from "./components/partials/QuizzCard.jsx";
+import QuizzBox from "./components/partials/QuizzBox.jsx";
+import QuizTemplate from "./components/partials/QuizTemplate.jsx";
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Root />,
+//     errorElement: <ErrorPage/>,
+//     loader: rootLoader,
+//     children: [
+//       {
+//         path: "contacts/:contactId",
+//         element: <Contact/>,
+//       },
+//     ],
+//   },
+// ]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />,
+//     errorElement: <ErrorPage/>,
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage/>,
-  },
-]);
+//   },
+// ]);
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route path="" element={<Home />} />
+      <Route path="login" element={<LoginSignup mode="login" />} />
+      <Route path="signup" element={<LoginSignup mode="signup" />} />
+      <Route path="quzztemplate" element={<QuizTemplate/>} />
+      
+    </Route>
+  )
+);
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ContextProvider>
+         <RouterProvider router={router} />
+    </ContextProvider>
+   
   </StrictMode>
 );

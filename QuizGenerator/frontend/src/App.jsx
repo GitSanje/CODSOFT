@@ -1,23 +1,24 @@
-import { useState } from 'react'
-import './index.css'
-import { Routes,Route } from 'react-router-dom'
-import LoginSignup from './components/users/LoginSignup'
-import QuizzCard from './components/partials/QuizzCard'
-import QuizzBox from './components/partials/QuizzBox'
-import Placeholder from './components/partials/Placeholder'
-import QuestionBox from './components/partials/QuestionBox'
-import QuizTemplate from './components/partials/QuizTemplate'
+
+import "./index.css";
+import { Routes, Route } from "react-router-dom";
+import LoginSignup from "./components/users/LoginSignup";
+import Home from "./components/pages/Home";
+import Layout from "./Layout";
+
 
 function App() {
-
   return (
     <>
-     {/* <LoginSignup/> */}
-     {/* <QuizzBox/> */}
-     <QuizTemplate/>
-
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<Home />} />
+          <Route path="login" element={<LoginSignup mode="login" />} />
+          <Route path="signup" element={<LoginSignup mode="signup" />} />
+         
+        </Route>
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
