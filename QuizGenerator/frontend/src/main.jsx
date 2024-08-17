@@ -17,9 +17,10 @@ import Contact from "./routes/contact.jsx";
 import Layout from "./Layout.jsx";
 import Home from "./components/pages/Home.jsx";
 import { ContextProvider } from "./context/GlobalContext";
-import QuizzCard from "./components/partials/QuizzCard.jsx";
-import QuizzBox from "./components/partials/QuizzBox.jsx";
-import QuizTemplate from "./components/partials/QuizTemplate.jsx";
+
+import QuizTemplate from "./components/partials/QuizTemplates/QuizTemplate.jsx";
+import { ToastContainer} from 'react-toastify'
+import QuizBuild from "./components/partials/QuizBuild/QuizBuild.jsx";
 // const router = createBrowserRouter([
 //   {
 //     path: "/",
@@ -45,20 +46,25 @@ import QuizTemplate from "./components/partials/QuizTemplate.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
+   
     <Route path="/" element={<Layout />}>
       <Route path="" element={<Home />} />
       <Route path="login" element={<LoginSignup mode="login" />} />
       <Route path="signup" element={<LoginSignup mode="signup" />} />
-      <Route path="quzztemplate" element={<QuizTemplate/>} />
+      <Route path="quzztemplate/:qzid/:qsid" element={<QuizTemplate/>} />
+      <Route path='quizbuild' element={ <QuizBuild/>}/>
       
     </Route>
+  
+   
   )
 );
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ContextProvider>
+   
          <RouterProvider router={router} />
-    </ContextProvider>
+
+         <ToastContainer />
    
   </StrictMode>
 );

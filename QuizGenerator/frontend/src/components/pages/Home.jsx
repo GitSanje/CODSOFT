@@ -1,5 +1,5 @@
 import useGlobalContextProvider from "../../context/GlobalContext";
-import QuizzBox from "../partials/QuizzBox"
+import QuizzBox from "../partials/QuizTemplates/QuizzBox"
 
 const Home = () => {
   const {allQzz} = useGlobalContextProvider()
