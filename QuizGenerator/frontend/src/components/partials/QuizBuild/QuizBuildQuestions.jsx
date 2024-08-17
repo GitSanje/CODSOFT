@@ -1,17 +1,35 @@
-import React, { useState } from "react";
+import React, { createRef, forwardRef, useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const QuizBuildQuestions = () => {
   const [quizQuestions, setQuizQuestions] = useState([
     { id: 1, mainQuestion: "" },
   ]);
+ // allows to focus on last list
+  const endOfListRef = useRef(null)
+  // focus the input on new ques
+  const textAreaRefs = useRef([createRef()])
+
+ 
   const addNewQuestion = () => {
+ const lastQ = quizQuestions.length -1
+   if(quizQuestions[lastQ].mainQuestion.trim(' ').length === 0){
+    toast.error("Question input is empty", {
+        autoClose:2000
+    })
+    return;
+   }
+
     setQuizQuestions((prv) => [
       ...prv,
       { id: prv.length + 1, mainQuestion: "" },
     ]);
+
+    textAreaRefs.current.push(createRef());
   };
   const deleteQuestion = (singleQ) => {
     const quizQuestionsCpy = [...quizQuestions]
@@ -21,6 +39,37 @@ const QuizBuildQuestions = () => {
     //(prev) => prev.filter((qus) => qus.id !== singleQ.id
     setQuizQuestions(filterQ);
   };
+  
+
+
+  useEffect(() => {
+    if(endOfListRef.current){
+        endOfListRef.current.scrollIntoView({behavior: 'smooth'})
+    }
+  },[quizQuestions])
+
+  const handleInputChange = (index, text) => {
+    const updatedQuestions = quizQuestions.map((ques, i) => {
+        if(index ===i ){
+            return { ...ques, mainQuestion: text}
+        }
+        return ques
+    })
+    setQuizQuestions( updatedQuestions)
+  }
+
+
+  useEffect(() => {
+    const lastQ = quizQuestions.length -1
+    if ( lastQ >= 0){
+     const lastArea = textAreaRefs.current[lastQ].current
+     if(lastArea){
+        lastArea.focus()
+     }
+    }
+  },[quizQuestions.length, textAreaRefs.current])
+  console.log(textAreaRefs);
+  
   
   return (
     <>
@@ -39,11 +88,22 @@ const QuizBuildQuestions = () => {
 
           {quizQuestions.map((singleQ, index) => (
             <div
+               ref={
+                quizQuestions.length -1 === index ? endOfListRef : null
+               }
               className="relative border ml-5 p-4 mt-4 border-indigo-500
                 border-opacity-50 rounded-md"
               key={index}
             >
-              <SingleQuestion questionIndex={index} />
+              <SingleQuestion 
+              
+              questionIndex={index}
+              value={singleQ.mainQuestion}
+              ref={textAreaRefs.current[index]}
+             onChange ={ (e) => 
+                handleInputChange(index, e.target.value)
+              }
+               />
               {
                 index !== 0 && (
                     <FontAwesomeIcon
@@ -76,7 +136,7 @@ const QuizBuildQuestions = () => {
 
 export default QuizBuildQuestions;
 
-const SingleQuestion = ({ questionIndex }) => {
+const SingleQuestion = forwardRef(({ questionIndex , value, onChange} ,ref) =>{
   return (
     <div className="w-full">
       <div className="flex items-center gap-3">
@@ -85,11 +145,16 @@ const SingleQuestion = ({ questionIndex }) => {
           <span>{questionIndex+1}</span>
         </div>
         <textarea
+       
           className="border border-gray-200 rounded-md p-2 ml-3
                 w-full outline-none resize-none"
           placeholder="Your Question here ..."
+          value={value}
+          onChange={onChange}
+          ref={ref}
         ></textarea>
       </div>
     </div>
   );
-};
+
+});
