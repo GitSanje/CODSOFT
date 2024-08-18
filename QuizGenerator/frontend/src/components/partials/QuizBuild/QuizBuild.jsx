@@ -1,28 +1,21 @@
-import React, { useState } from 'react'
-import QuizBuildNav from './QuizBuildNav'
-import QuizBuildTitle from './QuizBuildTitle'
-import QuizBuildQuestions from './QuizBuildQuestions'
+import React, { useState } from "react";
+import QuizBuildNav from "./QuizBuildNav";
+import QuizBuildTitle from "./QuizBuildTitle";
+import QuizBuildQuestions from "./QuizBuildQuestions";
+import { BuildQuizProvider } from "../../../context/BuildQuizContext";
 
 const QuizBuild = () => {
-
-  const [focusFirst, setFocusFirst ] = useState(true)
-
-  const quizTitleProps = {
-    focusProp : { focus: focusFirst, setFocusFirst}
-  }
-  const quizQuestionProps = {
-    focusProp : { focus: !focusFirst, setFocusFirst}
-  }
-   return (
+  return (
     <>
-    <div className="">
-    <QuizBuildNav/>
-<QuizBuildTitle {...quizTitleProps}/>
-<QuizBuildQuestions {...quizQuestionProps}/>
-    </div>
-
+      <div className="">
+        <BuildQuizProvider>
+          <QuizBuildNav />
+          <QuizBuildTitle />
+          <QuizBuildQuestions />
+        </BuildQuizProvider>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default QuizBuild
+export default QuizBuild;

@@ -6,9 +6,9 @@ const createNewQuiz = asyncHandler( async ( req, res) => {
 
     try {
         
-        const {  quizTitle, quizCategory, difficulty, questions } = req.body;
-        
-        if (!quizTitle || !quizCategory || !difficulty || !Array.isArray(questions) || questions.length === 0) {
+        const {  quizTitle, questions } = req.body;
+        //|| !quizCategory || !difficulty
+        if (!quizTitle  || !Array.isArray(questions) || questions.length === 0) {
             return res.status(400).json({ message: "Please provide all required fields: quizTitle, quizCategory, difficulty, and questions." });
         }
         const duplicate = await Quiz.findOne({ quizTitle}).lean().exec()
@@ -25,8 +25,6 @@ const createNewQuiz = asyncHandler( async ( req, res) => {
         }
         const quizObj = {
             quizTitle,
-            quizCategory,
-            difficulty,
             questions
         };
 

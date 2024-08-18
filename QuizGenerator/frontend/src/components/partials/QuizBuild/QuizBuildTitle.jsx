@@ -2,24 +2,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import Input from '../Input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCode } from '@fortawesome/free-solid-svg-icons'
+import useBuildQuizProvider from '../../../context/BuildQuizContext'
 
-const QuizBuildTitle = ({ focusProp}) => {
 
-  const [quizTitle, setQuizTitle] = useState('')
-  const { focus, setFocusFirst} = focusProp
-  const quizTitleRef = useRef(null)
-
+const QuizBuildTitle = () => {
+    const { QuiztitleObj} = useBuildQuizProvider()
+    const { quizTitleRef, quizTitle, handleTextInputChange }= QuiztitleObj
  
-
-  const handleTextInputChange = (v) => {
-    setQuizTitle(v)
-  }
-
-  useEffect(() => {
-    if (focus && quizTitleRef.current) {
-      quizTitleRef.current.focus()
-    }
-  }, [focus])
   return (
     <>
     <div className="m-5 p-3 flex justify-between items-center border border-indigo-700 rounded-md">

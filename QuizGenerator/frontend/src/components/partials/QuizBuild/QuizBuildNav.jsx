@@ -1,7 +1,10 @@
 import React from 'react'
 import Button from '../Button'
+import useBuildQuizProvider from '../../../context/BuildQuizContext'
 
 const QuizBuildNav = () => {
+
+   const {saveQuiz} = useBuildQuizProvider()
   return (
     <>
 <div className="my-12 mx-5 flex justify-between items-center">
@@ -13,7 +16,8 @@ const QuizBuildNav = () => {
 
     </div>
     <Button
-    className={"px-5"}>
+    className={"px-5"}
+    onClick= {() => saveQuiz()}>
         Save
     </Button>
 
