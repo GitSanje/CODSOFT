@@ -22,6 +22,10 @@ app.use(express.json())
 
 
 
+app.use('/quiz', require('./routes/quizRoute'))
+
+
+
 mongoose.connection.once('open', () => {
     console.log('connected to MongoDB')
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
