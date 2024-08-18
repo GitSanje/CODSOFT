@@ -10,7 +10,7 @@ const Layout = () => {
    <ContextProvider>
     <Header/>
     <Outlet/>
-    <Footer/>
+    {/* <Footer/> */}
     </ContextProvider>
    
 
