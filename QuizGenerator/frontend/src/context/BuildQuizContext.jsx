@@ -1,3 +1,4 @@
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import {
   useRef,
   createRef,
@@ -36,6 +37,17 @@ export const BuildQuizProvider = ({ children }) => {
   const textAreaRefs = useRef([createRef()]);
 
   const alphabets = ["A", "B", "C", "D"];
+
+
+
+  // Quizicon
+  const [ currIcon, setCurrIcon] = useState(faGlobe)
+  const [ toogleIconcard, setToogleIconcard] = useState(false)
+
+  const handleIcon = (icon) => {
+    setCurrIcon(icon)
+    setToogleIconcard(false)
+  }
 
   // focus on title when first render
   useEffect(() => {
@@ -176,7 +188,11 @@ export const BuildQuizProvider = ({ children }) => {
         QuiztitleObj,
         QuizQuesObj,
         QuizChoiceObj,
-        saveQuiz
+        saveQuiz,
+        handleIcon,
+        currIcon,
+        toogleIconcard,
+        handleToggle : () => setToogleIconcard(prev => !prev)
       }}
     >
       {children}

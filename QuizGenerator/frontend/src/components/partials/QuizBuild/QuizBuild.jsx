@@ -3,6 +3,7 @@ import QuizBuildNav from "./QuizBuildNav";
 import QuizBuildTitle from "./QuizBuildTitle";
 import QuizBuildQuestions from "./QuizBuildQuestions";
 import { BuildQuizProvider } from "../../../context/BuildQuizContext";
+import QuizIconsCard from "./QuizIconsCard";
 
 const QuizBuild = () => {
   return (
@@ -12,6 +13,8 @@ const QuizBuild = () => {
           <QuizBuildNav />
           <QuizBuildTitle />
           <QuizBuildQuestions />
+
+         
         </BuildQuizProvider>
       </div>
     </>

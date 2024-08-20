@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
-import Input from '../Input'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+
 import useBuildQuizProvider from '../../../context/BuildQuizContext'
+import QuizIconsCard from './QuizIconsCard'
 
 
 const QuizBuildTitle = () => {
-    const { QuiztitleObj} = useBuildQuizProvider()
+    const { QuiztitleObj, currIcon, handleToggle, toogleIconcard} = useBuildQuizProvider()
     const { quizTitleRef, quizTitle, handleTextInputChange }= QuiztitleObj
  
   return (
@@ -31,13 +31,27 @@ const QuizBuildTitle = () => {
             />
   
         </div>
-        <FontAwesomeIcon
-        icon={faCode}
+       <div className="">
+       <FontAwesomeIcon
+        icon={currIcon}
         height={40}
         width={40}
-        className='text-white p-2 rounded-md bg-indigo-700 cursor-pointer'/>
+        className='text-white p-2 rounded-md bg-indigo-700 cursor-pointer'
+        onClick={handleToggle}/>
+        {
+          toogleIconcard && (
+            <div className="absolute z-50 bg-white right-24 ">
+            <QuizIconsCard/>
+    
+            </div>
+          )
+        }
+       
 
+       </div>
+       
 
+       
     
     </div>
 
